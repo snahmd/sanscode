@@ -1,0 +1,70 @@
+<!--Home 3 Section 1 -->
+<section class="relative pt-20 py-10 lg:pt-28 lg:pb-12">
+    <div class="container px-4">
+        <div class="flex flex-col lg:flex-row justify-between mb-16">
+            <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Featured </span> Posts</h3>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between gap-[58px]">
+            <div class="flex flex-col gap-16">
+                <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-x-[30px] gap-y-[65px] max-w-[850px]">
+                    @@loop('../elements/card-post-6.html', [
+                        {
+                            "img": "assets/imgs/pages/img-06.png",
+                            "category": "Trending",
+                            "avatar": "assets/imgs/avatar/avatar-01.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Wildlife Conservation: Preserving Biodiversity"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-07.png",
+                            "category": "Fashion",
+                            "avatar": "assets/imgs/avatar/avatar-05.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Fashion Beyond Borders: Cultural Influences on Style"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-08.png",
+                            "category": "Business",
+                            "avatar": "assets/imgs/avatar/avatar-06.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Health Tech Revolution: The Impact of Wearables"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-09.png",
+                            "category": "Education",
+                            "avatar": "assets/imgs/avatar/avatar-02.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Sustainable Living: Tips for a Greener Tomorrow"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-10.png",
+                            "category": "Travel",
+                            "avatar": "assets/imgs/avatar/avatar-03.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Globetrotting in Style: A Journey Through My Lens"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-11.png",
+                            "category": "Science",
+                            "avatar": "assets/imgs/avatar/avatar-04.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Trends to Watch: Fashion Forecast for the Next Season"
+                        },
+                        ]
+                    )
+
+                </div>
+                <div class="relative">
+                    @@include('../elements/pagination.html')
+                </div>
+            </div>
+            @@include('../components/sidebar-1.html')
+        </div>
+    </div>
+</section>

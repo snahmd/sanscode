@@ -1,0 +1,20 @@
+
+
+<!-- Collapse item -->
+<div class="relative border border-neutral-300 dark:border-neutral-300 px-8 py-4 rounded-2xl text-start w-full dark:bg-neutral-dark-0 md:min-w-[700px] lg:min-w-[850px]" x-data="{ open: false }">
+    <div class="flex flex-row justify-between cursor-pointer" @click="open = !open">
+        <h6 class="font-bold text-lg text-neutral-950 dark:text-neutral-dark-950 ">
+            @@question
+        </h6>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" :class="{'rotate-45': open, 'rotate-0': !open}" class="transition-transform duration-200">
+            <rect width="24" height="24" rx="12" fill="#FFCF01" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M13 6H11V11H6V13H11V18H13V13H18V11H13V6Z" fill="#151618" />
+        </svg>
+    </div>
+    <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="mt-4">
+        <!-- Content -->
+        <p class="text-start text-base text-neutral-700 dark:text-neutral-dark-700 border-t-neutral-300 dark:border-t-neutral-dark-300 pt-6 pb-6 border-t leading-relaxed">
+            @@answer
+        </p>
+    </div>
+</div>

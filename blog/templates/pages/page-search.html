@@ -1,0 +1,102 @@
+@@include('../components/header-1.html')
+<div class="header-bg absolute top-0 left-0 right-0 -z-50 w-full h-[1100px] bg-gradient-to-b from-primary-light-950/15 to-transparent max-h-[1100px] overflow-hidden"></div>
+<section class="py-12">
+    <div class="container px-4">
+        <div class="flex flex-col gap-8 items-center justify-center text-center">
+           <!-- breadcrumb -->
+        <div class="hidden md:flex gap-2.5  justify-start items-center h-12 px-7 py-3.5 bg-neutral-0 dark:bg-neutral-dark-0 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300">
+            <a href="index.html" class="text-neutral-700 dark:text-neutral-dark-700 text-base font-medium  leading-normal">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" class="fill-neutral-700 dark:fill-neutral-dark-700">
+                <path d="M1.52344 11.9961C1.24219 11.9961 0.992188 11.9023 0.804688 11.7148C0.398438 11.3398 0.398438 10.6836 0.804688 10.3086L5.08594 5.99609L0.804688 1.71484C0.398438 1.33984 0.398438 0.683594 0.804688 0.308594C1.17969 -0.0976562 1.83594 -0.0976562 2.21094 0.308594L7.21094 5.30859C7.61719 5.68359 7.61719 6.33984 7.21094 6.71484L2.21094 11.7148C2.02344 11.9023 1.77344 11.9961 1.52344 11.9961Z" />
+            </svg>
+            <a href="category.html" class="text-neutral-700 dark:text-neutral-dark-700 text-base font-medium leading-normal">Search Results</a>
+        </div>
+            <h1 class="heading-1 mb-0">
+                Search <span class="font-light">Results</span>
+            </h1>
+            <p class="text-2xl font-medium text-center text-neutral-700 dark:text-neutral-dark-700">We found 25 articles for <span class="font-bold text-neutral-950 dark:text-neutral-dark-950">“Lifestyle”</span> key words </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="py-12 pb-24">
+    <div class="container px-4">
+        <div class="flex flex-col gap-[30px] max-w-[850px] mx-auto">
+            @@loop('../elements/card-post-10.html', [
+                    {
+                        "img": "assets/imgs/pages/img-01.png",
+                        "thumb": "assets/imgs/pages/thumb-01.png",
+                        "category": "Technology",
+                        "avatar": "assets/imgs/avatar/avatar-01.png",
+                        "author": "Alice Johnson",
+                        "date": "January 15, 2024",
+                        "time": "3 mins read",
+                        "title": "Transformative Learning: Adapting to Educational Innovations"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-02.png",
+                        "thumb": "assets/imgs/pages/thumb-02.png",
+                        "category": "Science",
+                        "avatar": "assets/imgs/avatar/avatar-02.png",
+                        "author": "Bob Smith",
+                        "date": "February 22, 2024",
+                        "time": "4 mins read",
+                        "title": "Unraveling the Mysteries of Dark Matter"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-03.png",
+                        "thumb": "assets/imgs/pages/thumb-03.png",
+                        "category": "Travel",
+                        "avatar": "assets/imgs/avatar/avatar-03.png",
+                        "author": "Eva Davis",
+                        "date": "March 10, 2024",
+                        "time": "5 mins read",
+                        "title": "A Journey Through the Enchanting Landscapes of New Zealand"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-04.png",
+                        "thumb": "assets/imgs/pages/thumb-04.png",
+                        "category": "Health",
+                        "avatar": "assets/imgs/avatar/avatar-04.png",
+                        "author": "Michael Anderson",
+                        "date": "April 5, 2024",
+                        "time": "2 mins read",
+                        "title": "The Importance of Mental Health in Modern Society"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-05.png",
+                        "thumb": "assets/imgs/pages/thumb-05.png",
+                        "category": "Fashion",
+                        "avatar": "assets/imgs/avatar/avatar-05.png",
+                        "author": "Sophia Miller",
+                        "date": "May 20, 2024",
+                        "time": "4 mins read",
+                        "title": "Trends to Watch: Fashion Forecast for the Next Season"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-14.png",
+                        "thumb": "assets/imgs/pages/thumb-06.png",
+                        "category": "Food",
+                        "avatar": "assets/imgs/avatar/avatar-06.png",
+                        "author": "David Carter",
+                        "date": "June 8, 2024",
+                        "time": "3 mins read",
+                        "title": "Culinary Delights: Exploring Exotic Flavors Around the World"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-15.png",
+                        "thumb": "assets/imgs/pages/thumb-07.png",
+                        "category": "Sports",
+                        "avatar": "assets/imgs/avatar/avatar-07.png",
+                        "author": "Olivia White",
+                        "date": "July 14, 2024",
+                        "time": "5 mins read",
+                        "title": "The Rise of E-Sports: A New Era in Competitive Gaming"
+                    },
+                    ]
+                )
+        </div>
+    </div>
+</section>
+@@include('../components/footer-2.html')

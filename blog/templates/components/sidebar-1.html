@@ -1,0 +1,82 @@
+<!-- SIDEVER -->
+<div class="sidebar flex flex-col gap-12 md:max-w-[380px]">
+    <!-- about box -->
+    <div class="about p-12 rounded-3xl bg-primary-light-300 dark:bg-primary-dark-300">
+        <h1 class="mb-8">
+            <a href="index.html">
+                <img src="assets/imgs/template/logo.svg" alt="logo" class="flex-shrink-0 relative dark:hidden">
+                <img src="assets/imgs/template/logo-white.svg" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block">
+            </a>
+        </h1>
+        <p class="font-medium text-neutral-950 dark:text-neutral-dark-950 mb-8 lg:mb-12 max-w-[350px]">
+            It involves entrepreneurship, management, marketing, finance, and many other aspects. Businesses aim to generate
+        </p>
+        @@include('../elements/social-icon.html')
+    </div>
+    <!-- Featured box -->
+    <div class="flex flex-col gap-4">
+        <h4 class="text-2xl text-neutral-950 font-bold dark:text-neutral-dark-950">Featured <span class="font-light">Posts</span></h4>
+        <div class="flex flex-col gap-6">
+            @@loop('../elements/card-post-4.html', [
+                {
+                    "img": "assets/imgs/pages/thumb-01.png",
+                    "category": "Fashion",
+                    "date": "June 8, 2024",
+                    "time": "12 mins read",
+                    "title": "Canvas and Keyboard: An Art-Tech Affair"
+                },
+                {
+                    "img": "assets/imgs/pages/thumb-02.png",
+                    "category": "Health",
+                    "date": "June 18, 2024",
+                    "time": "22 mins read",
+                    "title": "Tech Threads and Culinary Canvas: Lifestyle Palette"
+                },
+                {
+                    "img": "assets/imgs/pages/thumb-03.png",
+                    "category": "Sports",
+                    "date": "Aug 23, 2024",
+                    "time": "14 mins read",
+                    "title": "Living the Art-Tech Dream: My Multifaceted Life"
+                },
+                {
+                    "img": "assets/imgs/pages/thumb-04.png",
+                    "category": "Travel",
+                    "date": "June 8, 2024",
+                    "time": "14 mins read",
+                    "title": "Globetrotting in Style: A Journey Through My Lens"
+                },
+            ])
+        </div>
+    </div>
+
+    <!-- Category box -->
+    <div class="flex flex-col gap-4">
+        <h4 class="text-2xl text-neutral-950 dark:text-neutral-dark-950 font-bold">Explore <span class="font-light">Categories</span></h4>
+        <div class="justify-start items-start gap-2 inline-flex flex-wrap">
+            <a class="button-7 hover-up" href="category.html">Art</a>
+            <a class="button-7 hover-up" href="category.html">Fashion</a>
+            <a class="button-7 hover-up" href="category.html">Health</a>
+            <a class="button-7 hover-up" href="category.html">Food</a>
+            <a class="button-7 hover-up" href="category.html">Travel</a>
+            <a class="button-7 hover-up" href="category.html">Technology</a>
+            <a class="button-7 hover-up" href="category.html">Sports</a>
+        </div>
+    </div>
+
+    <!-- Banner box -->
+    <div class="flex flex-col gap-4">
+        <h4 class="text-2xl text-neutral-950 font-bold dark:text-neutral-dark-950">Sponsored <span class="font-light">Ads</span></h4>
+        <div class="w-72 h-96 relative rounded-2xl">
+            <img class="w-72 h-96 left-0 top-0 absolute rounded-2xl" src="assets/imgs/pages/banner1.png" />
+            <div class="w-72 h-96 left-0 bottom-0 absolute bg-gradient-to-t from-neutral-950/50 to-transparent rounded-2xl"></div>
+            <div class="w-full px-8 bottom-12 absolute text-center">
+                <span class="text-xl text-neutral-0 font-bold">
+                    <span class="font-light">It seeks to inspire and</span> motivate individuals
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+

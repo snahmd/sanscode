@@ -1,0 +1,117 @@
+<!-- Category 1 Section 3 -->
+<section class="relative pt-20 py-10 lg:pt-12 lg:pb-24">
+    <div class="container px-4">
+        <div class="flex flex-col justify-start mb-16 items-start lg:flex-row lg:justify-between lg:items-end">
+            <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Featured </span> Posts</h3>
+            <div class="justify-start items-start gap-2 inline-flex flex-wrap mb-3">
+                <a class="button-7 hover-up" href="category.html">Art</a>
+                <a class="button-7 hover-up" href="category.html">Fashion</a>
+                <a class="button-7 hover-up" href="category.html">Health</a>
+                <a class="button-7 hover-up" href="category.html">Food</a>
+                <a class="button-7 hover-up" href="category.html">Travel</a>
+                <a class="button-7 hover-up" href="category.html">Sports</a>
+            </div>
+        </div>
+        <div class="flex flex-col gap-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[65px]">
+                @@loop('../elements/card-post-3.html', [
+                    {
+                        "img": "assets/imgs/pages/img-06.png",
+                        "thumb": "assets/imgs/pages/thumb-01.png",
+                        "category": "Technology",
+                        "avatar": "assets/imgs/avatar/avatar-01.png",
+                        "author": "Alice Johnson",
+                        "date": "January 15, 2024",
+                        "time": "3 mins read",
+                        "title": "Transformative Learning: Adapting to Educational Innovations"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-07.png",
+                        "thumb": "assets/imgs/pages/thumb-02.png",
+                        "category": "Science",
+                        "avatar": "assets/imgs/avatar/avatar-02.png",
+                        "author": "Bob Smith",
+                        "date": "February 22, 2024",
+                        "time": "4 mins read",
+                        "title": "Unraveling the Mysteries of Dark Matter"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-08.png",
+                        "thumb": "assets/imgs/pages/thumb-03.png",
+                        "category": "Travel",
+                        "avatar": "assets/imgs/avatar/avatar-03.png",
+                        "author": "Eva Davis",
+                        "date": "March 10, 2024",
+                        "time": "5 mins read",
+                        "title": "A Journey Through the Enchanting Landscapes of New Zealand"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-09.png",
+                        "thumb": "assets/imgs/pages/thumb-04.png",
+                        "category": "Health",
+                        "avatar": "assets/imgs/avatar/avatar-04.png",
+                        "author": "Michael Anderson",
+                        "date": "April 5, 2024",
+                        "time": "2 mins read",
+                        "title": "The Importance of Mental Health in Modern Society"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-10.png",
+                        "thumb": "assets/imgs/pages/thumb-05.png",
+                        "category": "Fashion",
+                        "avatar": "assets/imgs/avatar/avatar-05.png",
+                        "author": "Sophia Miller",
+                        "date": "May 20, 2024",
+                        "time": "4 mins read",
+                        "title": "Trends to Watch: Fashion Forecast for the Next Season"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-11.png",
+                        "thumb": "assets/imgs/pages/thumb-06.png",
+                        "category": "Food",
+                        "avatar": "assets/imgs/avatar/avatar-06.png",
+                        "author": "David Carter",
+                        "date": "June 8, 2024",
+                        "time": "3 mins read",
+                        "title": "Culinary Delights: Exploring Exotic Flavors Around the World"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-12.png",
+                        "thumb": "assets/imgs/pages/thumb-07.png",
+                        "category": "Sports",
+                        "avatar": "assets/imgs/avatar/avatar-07.png",
+                        "author": "Olivia White",
+                        "date": "July 14, 2024",
+                        "time": "5 mins read",
+                        "title": "The Rise of E-Sports: A New Era in Competitive Gaming"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-13.png",
+                        "thumb": "assets/imgs/pages/thumb-08.png",
+                        "category": "Business",
+                        "avatar": "assets/imgs/avatar/avatar-08.png",
+                        "author": "Daniel Taylor",
+                        "date": "August 2, 2024",
+                        "time": "4 mins read",
+                        "title": "Navigating the Challenges of Entrepreneurship in the Digital Age"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-06.png",
+                        "thumb": "assets/imgs/pages/thumb-07.png",
+                        "category": "Sports",
+                        "avatar": "assets/imgs/avatar/avatar-07.png",
+                        "author": "Olivia White",
+                        "date": "July 14, 2024",
+                        "time": "5 mins read",
+                        "title": "The Rise of E-Sports: A New Era in Competitive Gaming"
+                    },
+
+                    ]
+                )
+            </div>
+            <div class="relative">
+                @@include('../elements/pagination.html')
+            </div>
+        </div>
+    </div>
+</section>

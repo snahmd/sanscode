@@ -1,0 +1,64 @@
+<!--Home 2 Section 1 -->
+<section class="relative pt-20 py-10 lg:pt-12 lg:pb-12">
+    <div class="container px-4">
+        <div class="flex flex-col md:flex-row justify-between gap-[58px]">
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-x-[30px] gap-y-[65px] max-w-[850px]">
+                @@loop('../elements/card-post-1.html', [
+                    {
+                        "img": "assets/imgs/pages/img-06.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-01.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "Urban Gardening: Growing Plants in the Concrete Jungle"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-07.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-05.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "Health Tech Revolution: The Impact of Wearables"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-08.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-06.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "Advancements in 3D Printing: Shaping the Future"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-09.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-02.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "Globetrotting in Style: A Journey Through My Lens"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-10.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-03.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "Exploring Quantum Computing: A Paradigm Shift"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-11.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-04.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "Wildlife Conservation: Preserving Biodiversity"
+                    },
+                    ]
+                )
+                <div class="mt-8">
+                    <a href="category.html" class="button-4 hover-up">Load more posts</a>
+                </div>
+            </div>
+            @@include('../components/sidebar-1.html')
+        </div>
+    </div>
+</section>

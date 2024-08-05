@@ -1,0 +1,66 @@
+<!--Home 1 Section 2 -->
+<section class="relative py-10 lg:py-12">
+    <div class="container px-4">
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
+            <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Featured </span>Posts</h3>
+            <div class="mb-3">
+                <button class="button-3 text-neutral-950 dark:text-neutral-dark-950">All Authors</button>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-[30px]">
+            <!--Author box-->
+            <div class="relative w-full min-w-[310px] border-2 border-neutral-300 dark:border-neutral-dark-300 rounded-3xl bg-neutral-0 dark:bg-neutral-dark-0 py-12 px-4 overflow-hidden max-h-[414px]">
+                <div class="bg-primary-light-950 absolute top-0 left-0 right-0 h-28 w-full z-1"></div>
+                <div class="w-full relative z-2 text-center flex flex-col justify-center content-center justify-items-center justify-self-center items-center">
+                    <div class="w-36 h-36 rounded-full border-4 border-neutral-0 dark:border-neutral-dark-300 overflow-hidden mb-8">
+                        <img src="assets/imgs/avatar/avatar-12.png" />
+                    </div>
+                    <div class="flex-col justify-start items-center gap-4 inline-flex">
+                        <a class="text-center text-neutral-950 dark:text-neutral-dark-950 text-4xl font-bold" href="author.html">Brooklyn Simmons</a>
+                        <div class="text-center text-neutral-700 text-base font-medium leading-normal">Goods and services. It involves entrepreneurship, management, marketing, finance, and many other aspects. Businesses aim to generate</div>
+                    </div>
+                </div>
+            </div>
+            <!--Post list 2-->
+            <div class="col-span-2">
+                <div class="flex flex-col gap-8">
+                    @@loop('../elements/card-post-2.html', [
+                        {
+                            "img": "assets/imgs/pages/img-14.png",
+                            "category": "Business",
+                            "avatar": "assets/imgs/avatar/avatar-01.png",
+                            "author": "James Foster",
+                            "date": "June 8, 2024",
+                            "title": "Emerging Trends in Renewable Energy: A Green Future"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-15.png",
+                            "category": "Environment",
+                            "avatar": "assets/imgs/avatar/avatar-05.png",
+                            "author": "Sophie Turner",
+                            "date": "June 8, 2024",
+                            "title": "Wildlife Conservation: Preserving Biodiversity"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-16.png",
+                            "category": "Sports",
+                            "avatar": "assets/imgs/avatar/avatar-06.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "The World of Virtual Reality: Beyond Gaming"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-17.png",
+                            "category": "Fashion",
+                            "avatar": "assets/imgs/avatar/avatar-02.png",
+                            "author": "Sophia Miller",
+                            "date": "June 8, 2024",
+                            "title": "The Evolution of Entertainment: From Analog to Digital"
+                        },
+                        ]
+                    )
+                </div>
+            </div>
+        </div>
+</section>

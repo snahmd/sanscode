@@ -1,0 +1,87 @@
+<!-- Category 1 Section 3 -->
+<section class="relative pt-20 py-10 lg:pt-12 lg:pb-24">
+    <div class="container px-4">
+        <div class="flex flex-col gap-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[65px]">
+                @@loop('../elements/card-post-1.html', [
+                    {
+                        "img": "assets/imgs/pages/img-13.png",
+                        "category": "Technology",
+                        "avatar": "assets/imgs/avatar/avatar-01.png",
+                        "author": "Alice Johnson",
+                        "date": "January 15, 2024",
+                        "title": "Discovering Ancient Civilizations: Archaeological Marvels"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-19.png",
+                        "category": "Science",
+                        "avatar": "assets/imgs/avatar/avatar-02.png",
+                        "author": "Bob Smith",
+                        "date": "February 22, 2024",
+                        "title": "Artistry Unleashed: Exploring the Diverse World of Contemporary Art"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-20.png",
+                        "category": "Travel",
+                        "avatar": "assets/imgs/avatar/avatar-03.png",
+                        "author": "Eva Davis",
+                        "date": "March 10, 2024",
+                        "title": "A Journey Through the Enchanting Landscapes of New Zealand"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-10.png",
+                        "category": "Health",
+                        "avatar": "assets/imgs/avatar/avatar-04.png",
+                        "author": "Michael Anderson",
+                        "date": "April 5, 2024",
+                        "title": "The Importance of Mental Health in Modern Society"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-09.png",
+                        "category": "Fashion",
+                        "avatar": "assets/imgs/avatar/avatar-05.png",
+                        "author": "Sophia Miller",
+                        "date": "May 20, 2024",
+                        "title": "Trends to Watch: Fashion Forecast for the Next Season"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-06.png",
+                        "category": "Food",
+                        "avatar": "assets/imgs/avatar/avatar-06.png",
+                        "author": "David Carter",
+                        "date": "June 8, 2024",
+                        "title": "Culinary Delights: Exploring Exotic Flavors Around the World"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-07.png",
+                        "category": "Sports",
+                        "avatar": "assets/imgs/avatar/avatar-07.png",
+                        "author": "Olivia White",
+                        "date": "July 14, 2024",
+                        "title": "The Rise of E-Sports: A New Era in Competitive Gaming"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-08.png",
+                        "category": "Business",
+                        "avatar": "assets/imgs/avatar/avatar-08.png",
+                        "author": "Daniel Taylor",
+                        "date": "August 2, 2024",
+                        "title": "Navigating the Challenges of Entrepreneurship in the Digital Age"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-09.png",
+                        "category": "Environment",
+                        "avatar": "assets/imgs/avatar/avatar-09.png",
+                        "author": "Emma Green",
+                        "date": "September 18, 2024",
+                        "title": "Sustainable Living: Tips for a Greener Tomorrow"
+                    }
+                    ]
+                )
+            </div>
+            <div class="relative">
+                @@include('../elements/pagination.html')
+            </div>
+        </div>
+    </div>
+</section>

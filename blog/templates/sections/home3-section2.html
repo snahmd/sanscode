@@ -1,0 +1,47 @@
+<!-- Home 3 Section 2 -->
+<section class="relative py-12 md:py-12 lg:py-12">
+    <div class="container px-4">
+        <div class="bg-primary-light-950 dark:bg-primary-dark-950 px-4 py-8  lg:px-32 lg:py-20 rounded-3xl">
+            <div class="flex flex-col justify-start mb-16 items-start lg:flex-row lg:justify-between lg:items-end">
+                <h3 class="heading-3 text-left mb-8 lg:mb-0 leading-none"><span class="font-light">Featured </span> Posts</h3>
+                <div class="justify-start items-start gap-2 inline-flex flex-wrap">
+                    <a class="button-8 hover-up" href="category.html">Art</a>
+                    <a class="button-8 hover-up" href="category.html">Fashion</a>
+                    <a class="button-8 hover-up" href="category.html">Health</a>
+                    <a class="button-8 hover-up" href="category.html">Food</a>
+                    <a class="button-8 hover-up" href="category.html">Travel</a>
+                    <a class="button-8 hover-up" href="category.html">Sports</a>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+                @@loop('../elements/card-post-5.html', [
+                            {
+                                "img": "assets/imgs/pages/img-14.png",
+                                "category": "Trending",
+                                "avatar": "assets/imgs/avatar/avatar-01.png",
+                                "author": "Emma Green",
+                                "date": "June 8, 2024",
+                                "title": "Globetrotting in Style: A Journey Through My Lens"
+                            },
+                            {
+                                "img": "assets/imgs/pages/img-15.png",
+                                "category": "Science",
+                                "avatar": "assets/imgs/avatar/avatar-05.png",
+                                "author": "John Wick",
+                                "date": "June 8, 2024",
+                                "title": "Global Cuisine Fusion: Blending Flavors Across Borders"
+                            },
+                            {
+                                "img": "assets/imgs/pages/img-16.png",
+                                "category": "Education",
+                                "avatar": "assets/imgs/avatar/avatar-06.png",
+                                "author": "Sophia Miller",
+                                "date": "June 8, 2024",
+                                "title": "Diversity in Cinema: Representations in Film"
+                            },
+                            ]
+                        )
+            </div>
+        </div>
+    </div>
+</section>

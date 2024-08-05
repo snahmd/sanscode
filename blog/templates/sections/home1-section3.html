@@ -1,0 +1,104 @@
+<!--Home 1 Section 3 -->
+<section class="relative py-10 lg:py-12">
+    <div class="container px-4">
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
+            <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Featured </span> Posts</h3>
+            <div>
+                <button class="button-3 text-neutral-950 dark:text-neutral-dark-950">View More</button>
+            </div>
+        </div>
+        <div class="grid lg:grid-cols-3 gap-[30px]">
+            <!--col-->
+            <div class="relative flex flex-col gap-4 mb-8 lg:mb-0 justify-start">
+                @@loop('../elements/card-post-3.html', [
+                    {
+                        "img": "assets/imgs/pages/img-14.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-01.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "Globetrotting in Style: A Journey Through My Lens"
+                        },
+                    ]
+                )
+                @@loop('../elements/card-post-4.html', [
+                    {
+                        "img": "assets/imgs/pages/thumb-01.png",
+                        "category": "Trending",
+                        "date": "June 8, 2024",
+                        "time": "2 mins read",
+                        "title": "The Importance of Mental Health in Modern Society"
+                    },
+                    {
+                        "img": "assets/imgs/pages/thumb-02.png",
+                        "category": "Trending",
+                        "date": "June 8, 2024",
+                        "time": "2 mins read",
+                        "title": "The Evolution of Entertainment: From Analog to Digital"
+                    },
+                ]
+                )
+            </div>
+            <div class="relative flex flex-col gap-4 mb-8 lg:mb-0">
+                @@loop('../elements/card-post-3.html', [
+                    {
+                        "img": "assets/imgs/pages/img-15.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-01.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "The Future of Robotics: Transforming Industries"
+                        },
+                    ]
+                )
+                @@loop('../elements/card-post-4.html', [
+                    {
+                        "img": "assets/imgs/pages/thumb-03.png",
+                        "category": "Trending",
+                        "date": "June 8, 2024",
+                        "time": "2 mins read",
+                        "title": "Wildlife Conservation: Preserving Biodiversity"
+                    },
+                    {
+                        "img": "assets/imgs/pages/thumb-04.png",
+                        "category": "Trending",
+                        "date": "June 8, 2024",
+                        "time": "2 mins read",
+                        "title": "Exploring Quantum Computing: A Paradigm Shift"
+                    },
+                ]
+                )
+            </div>
+            <div class="relative flex flex-col gap-4 mb-8 lg:mb-0">
+                @@loop('../elements/card-post-3.html', [
+                    {
+                        "img": "assets/imgs/pages/img-16.png",
+                        "category": "Trending",
+                        "avatar": "assets/imgs/avatar/avatar-03.png",
+                        "author": "John Wick",
+                        "date": "June 8, 2024",
+                        "title": "Diversity in Cinema: Representations in Film"
+                    },
+                ]
+                )
+                @@loop('../elements/card-post-4.html', [
+                    {
+                        "img": "assets/imgs/pages/thumb-05.png",
+                        "category": "Trending",
+                        "date": "June 8, 2024",
+                        "time": "2 mins read",
+                        "title": "Emerging Trends in Renewable Energy: A Green Future"
+                    },
+                    {
+                        "img": "assets/imgs/pages/thumb-06.png",
+                        "category": "Trending",
+                        "date": "June 8, 2024",
+                        "time": "2 mins read",
+                        "title": "The Art of Mindfulness: Cultivating Inner Peace"
+                    },
+                ]
+                )
+            </div>
+        </div>
+    </div>
+</section>

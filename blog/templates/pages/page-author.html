@@ -1,0 +1,124 @@
+@@include('../components/header-1.html')
+<div class="header-bg absolute top-0 left-0 right-0 -z-50 w-full h-[1100px] bg-gradient-to-b from-primary-light-950/15 to-transparent max-h-[1100px] overflow-hidden"></div>
+
+<section class="py-12">
+    <div class="container px-4">
+        <div class="w-full rounded-[26px] bg-gradient-to-t from-primary-light-950 via-primary-light-300 to-primary-light-200 p-1.5">
+            <div class="flex flex-col md:flex-row rounded-[21px] h-full w-full items-center justify-center bg-neutral-0 dark:bg-neutral-dark-0 back p-2 md:p-2 lg:p-16">
+                <div class="md:pr-16 md:min-w-72 lg:min-w-96 rounded-3xl overflow-hidden">
+                    <img class="rounded-3xl md:min-w-96" src="assets/imgs/pages/img-30.png" alt="">
+                </div>
+                <div class="p-2 md:p-2 lg:py-12 md:pl-8 lg:pl-16">
+                    <h3 class="heading-3 mb-4">Sarah Emily</h3>
+                    <p class="text-neutral-950 dark:text-neutral-dark-950 text-base font-medium lg:max-w-[810px]">You should write because you love the shape of stories and sentences and the creation of different words on a page. Graduating from a top accelerator or incubator can be as career-defining for a startup founder as an elite university diploma.</p>
+                    <div class="flex gap-2 mt-12">
+                        @@include('../elements/social-icon.html')
+                        <a class="h-12 px-4 rounded-[5px] flex justify-center items-center bg-primary-light-950 dark:bg-primary-dark-950 cursor-pointer hover-up text-neutral-950 dark:text-neutral-dark-950 text-xl font-medium">
+                            Follow
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="relative pt-20 py-10 lg:pt-12 lg:pb-24">
+    <div class="container px-4">
+        <div class="mb-16">
+            <h3 class="heading-2 text-left mb-4 lg:mb-4"><span class="font-light">Posted by</span> Sarah</h3>
+            <p class="text-neutral-700 dark:text-neutral-dark-700 text-base font-medium lg:max-w-[460px]">Feeling inquisitive? Have a read through some of our FAQs or contact our supporters for help</p>
+        </div>
+        <div class="flex flex-col lg:flex-row justify-between gap-[58px]">
+            <div class="flex flex-col gap-16">
+                <div class="flex flex-col gap-[30px] max-w-[850px]">
+                @@loop('../elements/card-post-10.html', [
+                    {
+                        "img": "assets/imgs/pages/img-01.png",
+                        "thumb": "assets/imgs/pages/thumb-01.png",
+                        "category": "Technology",
+                        "avatar": "assets/imgs/avatar/avatar-01.png",
+                        "author": "Alice Johnson",
+                        "date": "January 15, 2024",
+                        "time": "3 mins read",
+                        "title": "Transformative Learning: Adapting to Educational Innovations"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-02.png",
+                        "thumb": "assets/imgs/pages/thumb-02.png",
+                        "category": "Science",
+                        "avatar": "assets/imgs/avatar/avatar-02.png",
+                        "author": "Bob Smith",
+                        "date": "February 22, 2024",
+                        "time": "4 mins read",
+                        "title": "Unraveling the Mysteries of Dark Matter"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-03.png",
+                        "thumb": "assets/imgs/pages/thumb-03.png",
+                        "category": "Travel",
+                        "avatar": "assets/imgs/avatar/avatar-03.png",
+                        "author": "Eva Davis",
+                        "date": "March 10, 2024",
+                        "time": "5 mins read",
+                        "title": "A Journey Through the Enchanting Landscapes of New Zealand"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-04.png",
+                        "thumb": "assets/imgs/pages/thumb-04.png",
+                        "category": "Health",
+                        "avatar": "assets/imgs/avatar/avatar-04.png",
+                        "author": "Michael Anderson",
+                        "date": "April 5, 2024",
+                        "time": "2 mins read",
+                        "title": "The Importance of Mental Health in Modern Society"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-05.png",
+                        "thumb": "assets/imgs/pages/thumb-05.png",
+                        "category": "Fashion",
+                        "avatar": "assets/imgs/avatar/avatar-05.png",
+                        "author": "Sophia Miller",
+                        "date": "May 20, 2024",
+                        "time": "4 mins read",
+                        "title": "Trends to Watch: Fashion Forecast for the Next Season"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-14.png",
+                        "thumb": "assets/imgs/pages/thumb-06.png",
+                        "category": "Food",
+                        "avatar": "assets/imgs/avatar/avatar-06.png",
+                        "author": "David Carter",
+                        "date": "June 8, 2024",
+                        "time": "3 mins read",
+                        "title": "Culinary Delights: Exploring Exotic Flavors Around the World"
+                    },
+                    {
+                        "img": "assets/imgs/pages/img-15.png",
+                        "thumb": "assets/imgs/pages/thumb-07.png",
+                        "category": "Sports",
+                        "avatar": "assets/imgs/avatar/avatar-07.png",
+                        "author": "Olivia White",
+                        "date": "July 14, 2024",
+                        "time": "5 mins read",
+                        "title": "The Rise of E-Sports: A New Era in Competitive Gaming"
+                    },
+                    ]
+                )
+
+                </div>
+
+                <div class="relative">
+                    @@include('../elements/pagination.html')
+                </div>
+            </div>
+
+            @@include('../components/sidebar-1.html')
+        </div>
+    </div>
+</section>
+
+
+
+@@include('../components/footer-2.html')

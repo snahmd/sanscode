@@ -1,0 +1,98 @@
+<!-- SIDEVER 2 -->
+<div class="sidebar flex flex-col gap-12 md:max-w-[380px]">
+    <!-- Subscrible box -->
+    <div class="subscrible p-12 rounded-3xl bg-neutral-200 dark:bg-neutral-dark-200">
+        <h4 class="mb-4 text-2xl font-bold text-neutral-950 dark:text-neutral-dark-950 ">
+            Subscribe Us
+        </h4>
+        <p class="font-medium text-neutral-700 dark:text-neutral-dark-700 mb-4 lg:mb-8 max-w-[350px]">
+            Get the latest creative news from IDEKO magazine
+        </p>
+        <form class="max-w-full overflow-hidden" action="">
+            <div class="flex flex-col md:flex-row mb-4 md:bg-neutral-0 dark:bg-neutral-dark-200 border border-neutral-950 dark:border-neutral-700 rounded-xl overflow-hidden">
+                <input class="focus:outline-none transition duration-200 py-4 bg-neutral-0 dark:bg-neutral-dark-200 rounded-full pl-6 w-full mb-2 md:mb-0" type="text" placeholder="Your email address">
+                <button class="group w-full mr-[-3px] sm:w-auto h-14 py-4 px-6 rounded-xl bg-neutral-950 dark:bg-neutral-700 transition duration-200 flex items-center justify-center gap-2" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" class="fill-primary-light-950 group-hover:fill-neutral-0">
+                        <path d="M17.6094 9.16992L11.3594 15.4199C11.125 15.6543 10.8125 15.7715 10.5 15.7715C10.1484 15.7715 9.83594 15.6543 9.60156 15.4199C9.09375 14.9512 9.09375 14.1309 9.60156 13.6621L13.7031 9.52148H1.75C1.04688 9.52148 0.5 8.97461 0.5 8.27148C0.5 7.60742 1.04688 7.02148 1.75 7.02148H13.7031L9.60156 2.91992C9.09375 2.45117 9.09375 1.63086 9.60156 1.16211C10.0703 0.654297 10.8906 0.654297 11.3594 1.16211L17.6094 7.41211C18.1172 7.88086 18.1172 8.70117 17.6094 9.16992Z" />
+                    </svg>
+                </button>
+            </div>
+            <p class="text-neutral-700 text-sm pl-4">* Unsubscribe anytime</p>
+        </form>
+    </div>
+    <!-- Featured box -->
+    <div class="flex flex-col gap-4">
+        <h4 class="text-2xl text-neutral-950 font-bold dark:text-neutral-dark-950">Featured <span class="font-light">Posts</span></h4>
+        <div class="flex flex-col gap-6">
+            @@loop('../elements/card-post-4.html', [
+                {
+                    "img": "assets/imgs/pages/thumb-01.png",
+                    "category": "Fashion",
+                    "date": "June 8, 2024",
+                    "time": "12 mins read",
+                    "title": "Canvas and Keyboard: An Art-Tech Affair"
+                },
+                {
+                    "img": "assets/imgs/pages/thumb-02.png",
+                    "category": "Health",
+                    "date": "June 18, 2024",
+                    "time": "22 mins read",
+                    "title": "Tech Threads and Culinary Canvas: Lifestyle Palette"
+                },
+                {
+                    "img": "assets/imgs/pages/thumb-03.png",
+                    "category": "Sports",
+                    "date": "Aug 23, 2024",
+                    "time": "14 mins read",
+                    "title": "Living the Art-Tech Dream: My Multifaceted Life"
+                },
+                {
+                    "img": "assets/imgs/pages/thumb-04.png",
+                    "category": "Travel",
+                    "date": "June 8, 2024",
+                    "time": "14 mins read",
+                    "title": "Globetrotting in Style: A Journey Through My Lens"
+                },
+            ])
+        </div>
+    </div>
+    <!-- about box -->
+    <div class="about p-12 rounded-3xl bg-primary-light-300 dark:bg-primary-dark-300">
+        <h1 class="mb-8">
+            <a href="index.html">
+                <img src="assets/imgs/template/logo.svg" alt="logo" class="flex-shrink-0 relative dark:hidden">
+                <img src="assets/imgs/template/logo-white.svg" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block">
+            </a>
+        </h1>
+        <p class="font-medium text-neutral-950 dark:text-neutral-dark-950 mb-8 lg:mb-12 max-w-[350px]">
+            It involves entrepreneurship, management, marketing, finance, and many other aspects. Businesses aim to generate
+        </p>
+        @@include('../elements/social-icon.html')
+    </div>
+    <!-- Category box -->
+    <div class="flex flex-col gap-4">
+        <h4 class="text-2xl text-neutral-950 dark:text-neutral-dark-950 font-bold">Explore <span class="font-light">Categories</span></h4>
+        <div class="justify-start items-start gap-2 inline-flex flex-wrap">
+            <a class="button-7 hover-up" href="category.html">Art</a>
+            <a class="button-7 hover-up" href="category.html">Fashion</a>
+            <a class="button-7 hover-up" href="category.html">Health</a>
+            <a class="button-7 hover-up" href="category.html">Food</a>
+            <a class="button-7 hover-up" href="category.html">Travel</a>
+            <a class="button-7 hover-up" href="category.html">Technology</a>
+            <a class="button-7 hover-up" href="category.html">Sports</a>
+        </div>
+    </div>
+    <!-- Banner box -->
+    <div class="flex flex-col gap-4">
+        <h4 class="text-2xl text-neutral-950 font-bold dark:text-neutral-dark-950">Sponsored <span class="font-light">Ads</span></h4>
+        <div class="w-72 h-96 relative rounded-2xl">
+            <img class="w-72 h-96 left-0 top-0 absolute rounded-2xl" src="assets/imgs/pages/banner1.png" />
+            <div class="w-72 h-96 left-0 bottom-0 absolute bg-gradient-to-t from-neutral-950/50 to-transparent rounded-2xl"></div>
+            <div class="w-full px-8 bottom-12 absolute text-center">
+                <span class="text-xl text-neutral-0 font-bold">
+                    <span class="font-light">It seeks to inspire and</span> motivate individuals
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

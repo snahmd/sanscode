@@ -1,0 +1,54 @@
+<!--Home 2 Section 2 -->
+<section class="relative pt-20 py-10 lg:pt-12 lg:pb-24">
+    <div class="container px-4">
+        <div class="flex flex-col justify-start mb-16 items-start lg:flex-row lg:justify-between lg:items-end">
+            <h3 class="heading-3 text-left mb-8 lg:mb-0 leading-none"><span class="font-light">Featured </span> Posts</h3>
+            <div class="justify-start items-start gap-2 inline-flex flex-wrap">
+                <a class="button-7 hover-up" href="category.html">Art</a>
+                <a class="button-7 hover-up" href="category.html">Fashion</a>
+                <a class="button-7 hover-up" href="category.html">Health</a>
+                <a class="button-7 hover-up" href="category.html">Food</a>
+                <a class="button-7 hover-up" href="category.html">Travel</a>
+                <a class="button-7 hover-up" href="category.html">Sports</a>
+            </div>
+        </div>
+        <!--Grid-->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[30px]">
+            @@loop('../elements/card-post-5.html', [
+                        {
+                            "img": "assets/imgs/pages/img-14.png",
+                            "category": "Trending",
+                            "avatar": "assets/imgs/avatar/avatar-01.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Globetrotting in Style: A Journey Through My Lens"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-15.png",
+                            "category": "Trending",
+                            "avatar": "assets/imgs/avatar/avatar-05.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Innovation in Space Exploration: New Frontiers"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-16.png",
+                            "category": "Trending",
+                            "avatar": "assets/imgs/avatar/avatar-06.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Wildlife Conservation: Preserving Biodiversity"
+                        },
+                        {
+                            "img": "assets/imgs/pages/img-17.png",
+                            "category": "Trending",
+                            "avatar": "assets/imgs/avatar/avatar-02.png",
+                            "author": "John Wick",
+                            "date": "June 8, 2024",
+                            "title": "Urban Gardening: Growing Plants in the Concrete Jungl"
+                        },
+                        ]
+                    )
+        </div>
+    </div>
+</section>

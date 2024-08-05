@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>IDEKO - Personal Blog TailwindCSS Template</title>
+	<link rel="icon" href="assets/imgs/template/favicon.svg" type="image/svg+xml" />
+	<script src="assets/js/vendors/color-modes.js"></script>
+	<link rel="preconnect" href="https://fonts.bunny.net">
+	<link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800,900" rel="stylesheet" />
+	<link rel="stylesheet" href="assets/css/vendors/normalize.css">
+	<link rel="stylesheet" href="assets/css/vendors/animate.min.css">
+	<link rel="stylesheet" href="assets/css/vendors/swiper-bundle.css">
+	<link rel="stylesheet" href="assets/css/vendors/lightbox.css">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body class="bg-neutral-0 dark:bg-neutral-dark-0">
+	<header class="main-header mx-auto w-full flex justify-center py-2 z-50 relative dark:bg-primary-dark-0">
+		<div class="container flex justify-between items-center relative px-4">
+			<h1>
+				<a href="index.html">
+					<img src="assets/imgs/template/logo.svg" alt="logo" class="flex-shrink-0 relative dark:hidden">
+					<img src="assets/imgs/template/logo-white.svg" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block">
+				</a>
+			</h1>
+			@@include('navigation.html')
+			<div class="flex justify-end align-middle content-center items-center relative gap-4">
+				<div class="language-switcher py-4 relative z-10">
+					@@include('../elements/language-switch.html')
+				</div>
+
+				<div class="dark-light cursor-pointer flex relative z-20">
+					<img src="assets/imgs/template/icon-dark-light.svg" alt="dark/light" class="dark:hidden">
+					<img src="assets/imgs/template/icon-dark-light-white.svg" alt="dark/light" class="hidden dark:inline-block">
+				</div>
+				<div class="search-box flex relative py-4 z-20">
+					<div class="search-icon cursor-pointer flex pr-2">
+						<img src="assets/imgs/template/icon-search.svg" alt="dark/light" class="flex-shrink-0 relative dark:hidden">
+						<img src="assets/imgs/template/icon-search-white.svg" alt="dark/light" class="flex-shrink-0 relative hidden dark:inline-block">
+					</div>
+					<div class="search-box-content absolute top-full right-0 p-10  mr-[-50px] max-w-[360px] md:max-w-none bg-neutral-0 dark:bg-neutral-dark-200 rounded-2xl shadow-sm hidden invisible mt-8 transition-all duration-300">
+						<h1 class="text-5xl font-bold text-neutral-950 dark:text-neutral-0 mb-4">Search <span class="font-light">Content</span></h1>
+						<div class="relative mb-8">
+							<form action="">
+								<div class="flex gap-4 mb-4 bg-neutral-0 dark:bg-neutral-dark-200 rounded-full p-1 pl-9 border border-neutral-300 dark:border-neutral-dark-300">
+									<input class="flex-1 focus:outline-none transition duration-200 bg-transparent max-w-[175px] md:max-w-none" type="text" placeholder="Enter your key words">
+									<button class="min-w-12 size-12 rounded-full bg-primary-light-950 transition duration-200 flex items-center justify-center gap-2" type="submit">
+										<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+											<g clip-path="url(#clip0_135_1647)">
+												<path d="M15.4202 17.2452L19.8183 21.6443C20.0585 21.8716 20.3775 22 20.7093 22C21.417 21.999 21.9991 21.416 21.9991 20.7084C21.9991 20.3775 21.8717 20.0585 21.6443 19.8183L17.2452 15.421C20.1162 11.6554 19.8321 6.24979 16.3946 2.81137L16.3882 2.80496L16.1333 2.55012C16.0977 2.51274 16.0577 2.47981 16.0142 2.45204C12.2467 -0.932293 6.43592 -0.814043 2.8105 2.81137C-0.936833 6.55962 -0.936833 12.6463 2.8105 16.3927C6.24983 19.832 11.6563 20.1171 15.4202 17.2452ZM14.5356 4.66946C17.2397 7.37637 17.2397 11.8286 14.5356 14.5355C11.8287 17.2388 7.37733 17.2388 4.67042 14.5355C1.96533 11.8286 1.96533 7.37637 4.67042 4.66946C7.37733 1.96529 11.8287 1.96529 14.5356 4.66946Z" fill="#151618" />
+											</g>
+											<defs>
+												<clipPath id="clip0_135_1647">
+													<rect width="22" height="22" fill="white" />
+												</clipPath>
+											</defs>
+										</svg>
+									</button>
+								</div>
+							</form>
+							<div class="flex-col justify-start items-start gap-3 inline-flex mt-8">
+								<div class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold">Suggested</div>
+								<div class="flex flex-wrap gap-4">
+									<a href="#" class="font-regular text-base text-neutral-700 link-hover hover:text-neutral-950 dark:text-neutral-0 dark:hover:text-neutral-dark-600">Events</a>
+									<a href="#" class="font-regular text-base text-neutral-700 link-hover hover:text-neutral-950 dark:text-neutral-0 dark:hover:text-neutral-dark-600">Shop</a>
+									<a href="#" class="font-regular text-base text-neutral-700 link-hover hover:text-neutral-950 dark:text-neutral-0 dark:hover:text-neutral-dark-600">Tech</a>
+									<a href="#" class="font-regular text-base text-neutral-700 link-hover hover:text-neutral-950 dark:text-neutral-0 dark:hover:text-neutral-dark-600">Fashion</a>
+									<a href="#" class="font-regular text-base text-neutral-700 link-hover hover:text-neutral-950 dark:text-neutral-0 dark:hover:text-neutral-dark-600">Books</a>
+									<a href="#" class="font-regular text-base text-neutral-700 link-hover hover:text-neutral-950 dark:text-neutral-0 dark:hover:text-neutral-dark-600">Travel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="py-4 hover-up xl:flex hidden relative z-20">
+					<a class="btn-primary" href="page-login.html">
+						Sign in
+					</a>
+				</div>
+				<button class="navbar-burger self-center xl:hidden">
+					<svg class="fill-neutral-950 dark:fill-neutral-dark-950" id="fi_2976215" enable-background="new 0 0 464.205 464.205" height="26" viewBox="0 0 464.205 464.205" width="26" xmlns="http://www.w3.org/2000/svg"><g><g id="grip-solid-horizontal_1_"><path d="m435.192 406.18h-406.179c-16.024 0-29.013-12.99-29.013-29.013s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.99 29.013 29.013-.001 16.023-12.99 29.013-29.014 29.013z"></path><path d="m435.192 261.115h-406.179c-16.024 0-29.013-12.989-29.013-29.012s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.989 29.013 29.013s-12.99 29.012-29.014 29.012z"></path><path d="m435.192 116.051h-406.179c-16.024 0-29.013-12.989-29.013-29.013s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.989 29.013 29.013s-12.99 29.013-29.014 29.013z"></path></g></g></svg>
+				</button>
+			</div>
+			@@include('mobile-menu.html')
+		</div>
+	</header>
