@@ -1,3 +1,4 @@
+{% load wagtailimages_tags %}
 <!-- Footer -->
 <footer class="w-full pb-20">
     <div class="container px-4">
@@ -6,8 +7,9 @@
         <div class="mb-8 lg:mb-4 lg:max-w-96">
           <h1 class="mb-8">
             <a href="index.html">
-              <img src="/static/assets/imgs/template/logo.svg" alt="logo" class="flex-shrink-0 relative dark:hidden">
-              <img src="/static/assets/imgs/template/logo-white.svg" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block">
+              {% image homeImage width-100 as logo %}
+              <img src="{{logo.url}}" alt="logo" class="flex-shrink-0 relative dark:hidden">
+              <img src="{{logo.url}}" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block">
             </a>
           </h1>
           <p class="font-medium text-neutral-950 dark:text-neutral-dark-950 mb-8 lg:mb-12 max-w-[350px]">

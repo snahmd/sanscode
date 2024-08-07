@@ -1,11 +1,62 @@
 from django.db import models
+from wagtail.models import Page, Orderable
 
-from wagtail.models import Page
-from wagtail.admin.panels import FieldPanel
+from modelcluster.fields import ParentalKey
+from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.fields import RichTextField
 from wagtail.images import get_image_model
+# import register for django
+from wagtail.snippets.models import register_snippet
+
+
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
+class MessageUser(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    
+
+register_snippet(MessageUser)
+    
+class BlogAuthor(models.Model):
+    name = models.CharField(max_length=100)
+    website = models.EmailField(max_length=100)
+    image = models.ForeignKey(
+        get_image_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    def __str__(self):
+        return self.name
+
+register_snippet(BlogAuthor)
+
+class BlogDetailAuthorPlacement(models.Model):
+    page = ParentalKey('BlogDetail', related_name='author_placement')
+    author = models.ForeignKey(
+        'blogpage.BlogAuthor',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    panels = [
+        FieldPanel('author'),
+    ]
+
+    def __str__(self):
+        return self.author.name
 
 class BlogIndex(Page):
 
@@ -58,15 +109,35 @@ class BlogIndex(Page):
 
         return context
 
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.fields import ParentalKey 
+from taggit.models import TaggedItemBase
+
+class BlogPageTag(TaggedItemBase):
+    content_object = ParentalKey(
+        'blogpage.BlogDetail',
+        related_name='tagged_items',
+        on_delete=models.CASCADE
+    )
+
 class BlogDetail(Page):
+    
+
 
     # template = 'home/home_page.html'
     template = 'blogpage/blog_detail.html'
     parent_page_type = ['blogpage.BlogIndex']
     subpage_types = []
+
+    
    
     subtitle = models.CharField(max_length=100, blank=True, null=True)
-    body = RichTextField(blank=True)
+    body = RichTextField(
+        blank=True,
+        features=['h2', 'h3', 'bold', 'italic', 'link', 'ol', 'ul', 'hr', 'document-link', 'image', 'embed', 'code', 'blockquote', 'superscript', 'subscript', 'strikethrough']
+    )
+
+    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
     image = models.ForeignKey(
         get_image_model(),
@@ -113,6 +184,8 @@ class BlogDetail(Page):
         FieldPanel('cta_url_two'),
         FieldPanel('cta_url_three'),
         FieldPanel('cta_url_four'),
+        FieldPanel('tags'),
+        InlinePanel('author_placement', label="Author"),
     ] 
     # context ile template'e veri gönderme
     def get_context(self, request):

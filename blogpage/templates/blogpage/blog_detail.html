@@ -28,8 +28,13 @@
             <span class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Technology</span>
           </a>
           <div class="justify-start items-center gap-2 flex">
-            <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="/static/imgs/avatar/avatar-10.png" /></a>
-            <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="author.html">M. Azumi</a> - 28 January 2014</div>
+            {% for iter in page.author_placement.all  %}
+              {% image iter.author.image width-500 as custom_image %}
+              <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="{{custom_image.url}}" /></a>
+              <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">
+                <a href="author.html">{{iter.author.name}} - </a> </div>
+            {% endfor %} 
+            {{page.latest_revision_created_at|date:"d.m.Y"}}
           </div>
         </div>
         <h1 class="text-4xl lg:text-6xl font-bold text-neutral-950 dark:text-neutral-dark-950 max-w-5xl leading-snug">
@@ -50,8 +55,9 @@
             
             {% image page.image max-800x500 as custom_image %}
               <img src="{{ custom_image.url }}" class="rounded-3xl mb-8" alt="{{ custom_image.alt }}">
-          
+            <div class="richtext">
             {{ page.body|richtext }}
+            </div>
           </div>
           <!-- Single Conttent -->
 
@@ -60,10 +66,9 @@
               <div>
                 <h6 class="text-lg font-bold mb-4">Popular Tag</h6>
                 <div class="flex flex-wrap gap-2">
-                  <a href="category.html" class="hover-up px-5 py-2 rounded-full border border-neutral-300 dark:border-neutral-dark-300  text-base font-medium hover:bg-neutral-300  hover:dark:bg-neutral-dark-300 transition-all duration-300">Art</a>
-                  <a href="category-2.html" class="hover-up px-5 py-2 rounded-full border border-neutral-300 dark:border-neutral-dark-300  text-base font-medium hover:bg-neutral-300  hover:dark:bg-neutral-dark-300 transition-all duration-300">Fashion</a>
-                  <a href="category-3.html" class="hover-up px-5 py-2 rounded-full border border-neutral-300 dark:border-neutral-dark-300  text-base font-medium hover:bg-neutral-300  hover:dark:bg-neutral-dark-300 transition-all duration-300">Health</a>
-                  <a href="category-4.html" class="hover-up px-5 py-2 rounded-full border border-neutral-300 dark:border-neutral-dark-300  text-base font-medium hover:bg-neutral-300  hover:dark:bg-neutral-dark-300 transition-all duration-300">Food</a>
+                  {% for tag in page.tags.all %}
+                  <a href="/blog/?tag={{ tag.slug }}" class="hover-up px-5 py-2 rounded-full border border-neutral-300 dark:border-neutral-dark-300  text-base font-medium hover:bg-neutral-300  hover:dark:bg-neutral-dark-300 transition-all duration-300">{{tag.name}}</a>
+                  {% endfor %}
                 </div>
               </div>
               <div>
@@ -180,7 +185,7 @@
           <div class="flex flex-col gap-4">
             <h4 class="text-2xl text-neutral-950 font-bold dark:text-neutral-dark-950">Featured <span class="font-light">Posts</span></h4>
             <div class="flex flex-col gap-6">
-              {% for featured_post in blogDetailPost%}
+              {% for featured_post in blogDetailPost|slice:":4"%}
               <div class="w-full flex items-center gap-2.5  hover-up">
                 <div class="justify-start items-center gap-4 inline-flex">
                   <a href="{{ featured_post.url}}" class="rounded-2xl overflow-hidden w-full h-full max-h-[90px] max-w-[106px]">

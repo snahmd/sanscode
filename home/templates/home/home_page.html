@@ -106,7 +106,7 @@
                 <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
               </a>
               <div class="justify-start items-center gap-2 flex">
-                <a href="#"><img class="w-9 h-9 rounded-3xl" src="/static/avatar/{{ blog_post.owner}}.JPG" /></a>
+                <a href="#"><img class="w-9 h-9 rounded-3xl object-cover" src="/static/avatar/{{ blog_post.owner}}.png" /></a>
                 <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700 uppercase"><a href="#">{{ blog_post.owner}}</a> - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}</div>
               </div>
             </div>
@@ -132,7 +132,7 @@
           <div class="w-full relative z-2 text-center flex flex-col justify-center content-center justify-items-center justify-self-center items-center">
             <div class="w-36 h-36 rounded-full border-4 border-neutral-0 dark:border-neutral-dark-300 overflow-hidden mb-8">
               
-              <img src="/static/avatar/{{ featuredOwner}}.JPG" />
+              <img src="/static/avatar/{{ featuredOwner}}.png" />
               
             </div>
             <div class="flex-col justify-start items-center gap-4 inline-flex">

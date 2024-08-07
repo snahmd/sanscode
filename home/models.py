@@ -33,6 +33,8 @@ class HomePage(Page):
         context['blogpages'] = BlogDetail.objects.live().public()
         context["featuredOwner"] = "admin"
         context["myName"] = "_sanscode"
-        print(context)
+       
+        # send in homepage img to template
+        context['homeImage'] = self.image
        
         return context
