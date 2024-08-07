@@ -24,9 +24,11 @@
       </div>
       <div class="flex flex-col gap-4 items-center justify-center text-center">
         <div class="justify-center items-center gap-4 flex flex-col md:flex-row">
-          <a href="category.html" class="inline-flex  px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300 justify-center items-center gap-2.5">
-            <span class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Technology</span>
-          </a>
+          {% for iter in page.categories_placement.all  %}
+            <a href="category.html" class="inline-flex  px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300 justify-center items-center gap-2.5">
+              <span class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{ iter.categories.name }}</span>
+            </a>
+          {% endfor %}
           <div class="justify-start items-center gap-2 flex">
             {% for iter in page.author_placement.all  %}
               {% image iter.author.image width-500 as custom_image %}
@@ -56,7 +58,7 @@
             {% image page.image max-800x500 as custom_image %}
               <img src="{{ custom_image.url }}" class="rounded-3xl mb-8" alt="{{ custom_image.alt }}">
             <div class="richtext">
-            {{ page.body|richtext }}
+            {{ page.body }}
             </div>
           </div>
           <!-- Single Conttent -->
@@ -238,13 +240,9 @@
           <div class="flex flex-col gap-4">
             <h4 class="text-2xl text-neutral-950 dark:text-neutral-dark-950 font-bold">Explore <span class="font-light">Categories</span></h4>
             <div class="justify-start items-start gap-2 inline-flex flex-wrap">
-              <a class="button-7 hover-up" href="category.html">Art</a>
-              <a class="button-7 hover-up" href="category.html">Fashion</a>
-              <a class="button-7 hover-up" href="category.html">Health</a>
-              <a class="button-7 hover-up" href="category.html">Food</a>
-              <a class="button-7 hover-up" href="category.html">Travel</a>
-              <a class="button-7 hover-up" href="category.html">Technology</a>
-              <a class="button-7 hover-up" href="category.html">Sports</a>
+              {% for i in blog_categories %}  
+                <a class="button-7 hover-up" href="/blog/?category={{ i.slug }}">{{i.name}}</a>
+              {% endfor %}
             </div>
           </div>
           <!-- Banner box -->
