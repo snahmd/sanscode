@@ -6,10 +6,10 @@
       <div class="grid lg:grid-cols-2">
         <div class="mb-8 lg:mb-4 lg:max-w-96">
           <h1 class="mb-8">
-            <a href="index.html">
-              {% image homeImage width-100 as logo %}
-              <img src="{{logo.url}}" alt="logo" class="flex-shrink-0 relative dark:hidden">
-              <img src="{{logo.url}}" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block">
+            <a href="#">
+              
+              <img src="/static/avatar/logo.png" alt="logo" class="flex-shrink-0 relative dark:hidden w-[100px]">
+              <img src="/static/avatar/logo.png" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block w-[100px]">
             </a>
           </h1>
           <p class="font-medium text-neutral-950 dark:text-neutral-dark-950 mb-8 lg:mb-12 max-w-[350px]">
@@ -59,14 +59,16 @@
             <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Pages</h6>
             <ul>
               <li class="footer-menu">
-                <a href="page-about.html" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Home</a>
+                <a href="/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Home</a>
               </li>
+             
+
               <li class="footer-menu">
-                <a href="page-contact.html" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Contact</a>
+                <a href="/contact/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Contact</a>
               </li>
               
               <li class="footer-menu">
-                <a href="page-search.html" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Featured Posts</a>
+                <a href="/blog/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Featured Posts</a>
               </li>
             </ul>
           </div>
@@ -74,7 +76,7 @@
         </div>
       </div>
       <div class="pt-8">
-        <p class="text-sm text-neutral-700 dark:text-neutral-dark-700">© _sanscode 2024. Development by <a href="https://alithemes.com" class="text-neutral-950 dark:text-neutral-dark-950">Wagtail</a></p>
+        <p class="text-sm text-neutral-700 dark:text-neutral-dark-700">© _sanscode 2024. Developed with <a href="https://alithemes.com" class="text-neutral-950 dark:text-neutral-dark-950">Wagtail</a></p>
       </div>
     </div>
   </footer>

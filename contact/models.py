@@ -3,6 +3,7 @@ from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel
 from wagtail.fields import RichTextField
 from modelcluster.fields import ParentalKey
+from blogpage.models import BlogDetail
 # Create your models here.
 
 class FormField(AbstractFormField):
@@ -40,4 +41,9 @@ class ContactPage(AbstractEmailForm):
         verbose_name = "Contact Page"
         verbose_name_plural = "Contact Pages"
     
-    
+    def get_context(self, request):
+        context = super().get_context(request)
+        
+        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at')[:6]
+       
+        return context

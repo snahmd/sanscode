@@ -134,7 +134,7 @@ class BlogIndex(Page):
 
         # Pagination
         page = request.GET.get('p')
-        paginator = Paginator(context['blogpages'], 2)
+        paginator = Paginator(context['blogpages'], 9)
         try:
             blogpages = paginator.page(page)
             context["currentPage"] = int(page)
@@ -145,7 +145,7 @@ class BlogIndex(Page):
             blogpages = paginator.page(paginator.num_pages)
             context["currentPage"] = paginator.num_pages
         context['blogpages'] = blogpages 
-        
+        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at')[:6]
         
 
         return context
@@ -167,7 +167,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtailcodeblock.blocks import CodeBlock
 
-
+from wagtail import blocks
 
 
 class BlogDetail(Page):
@@ -205,8 +205,24 @@ class BlogDetail(Page):
             ('embed', EmbedBlock()),
             ('code', CodeBlock()),
             ('blockquote', BlockQuoteBlock()),
+            ("carousel", blocks.StreamBlock(
+                [
+                    ('image', ImageChooserBlock()),
+                    ('quotation', blocks.StructBlock(
+                        [
+                            ('quote', TextBlock()),
+                            ('cite', TextBlock()),
+                        ],
+                        icon='openquote',
+                    )),
+                ],
+            ))
 
         ],
+        # block_counts= {
+        #     "text": {"min_num": 1, "max_num": 5},
+        #     "image": {"max_num": 1},
+        # }
         use_json_field= True,
         null=True,
         blank=True,
@@ -257,6 +273,7 @@ class BlogDetail(Page):
     def get_context(self, request):
         context = super().get_context(request)
         context['blogDetailPost'] = BlogDetail.objects.live().public().order_by('-first_published_at')
+        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at')[:6]
         # context["prevPost"] = BlogDetail.objects.live().public().filter(first_published_at__lt=self.first_published_at).order_by('-first_published_at').first()
         # if prevPost exist then send it
         context["prevPost"] = BlogDetail.objects.live().public().filter(first_published_at__lt=self.first_published_at).order_by('-first_published_at').first()

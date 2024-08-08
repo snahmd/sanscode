@@ -34,7 +34,8 @@ class HomePage(Page):
         context["featuredOwner"] = "admin"
         context["myName"] = "_sanscode"
        
-        # send in homepage img to template
-        context['homeImage'] = self.image
+        # # send in homepage img to template
+        # context['homeImage'] = self.image
+        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at')[:6]
        
         return context
