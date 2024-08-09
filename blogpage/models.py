@@ -84,6 +84,9 @@ class BlogDetailCategoriesPlacement(models.Model):
     def __str__(self):
         return self.categories.name    
 
+
+  
+
 class BlogIndex(Page):
 
     # template = 'home/home_page.html'
@@ -169,7 +172,50 @@ from wagtailcodeblock.blocks import CodeBlock
 
 from wagtail import blocks
 
+from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.snippets.blocks import SnippetChooserBlock
 
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    bio = models.TextField()
+    website = models.EmailField(max_length=100)
+    image = models.ForeignKey(
+        get_image_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+   
+
+    def __str__(self):
+        return self.name
+
+
+from wagtail.contrib.forms.models import AbstractFormField
+# class SubscribeFormField(AbstractFormField):
+    
+#     page = ParentalKey(
+#         "BlogDetail", 
+#         related_name="form_fields",
+#         on_delete=models.CASCADE
+#         )
+class Subscribe(models.Model):
+    
+    email = models.EmailField(max_length=100)
+
+    def __str__(self):
+        return self.email
+
+ 
+
+    
+
+     
+register_snippet(Subscribe)
+
+
+from blocks import blocks as custom_blocks
 class BlogDetail(Page):
     
 
@@ -199,24 +245,52 @@ class BlogDetail(Page):
 
     body = StreamField(
         [
-            ('text', TextBlock()),
+            # ('text', TextBlock()),
             ('rich_text', RichTextBlock()),
-            ('image', ImageChooserBlock()),
+            # ('image', ImageChooserBlock()),
+            ('text', custom_blocks.TextBlock()),
+            ('document', DocumentChooserBlock()),
+            ('page', blocks.PageChooserBlock( required=False)),
+            ('author', SnippetChooserBlock('blogpage.Author')),
+            ('info', custom_blocks.InfoBlock()),
+            ('faq', custom_blocks.FAQListBlock()),
+            ('carousel', custom_blocks.CarouselBlock()),
+            ('image', custom_blocks.ImageBlock()),
             ('embed', EmbedBlock()),
             ('code', CodeBlock()),
             ('blockquote', BlockQuoteBlock()),
-            ("carousel", blocks.StreamBlock(
-                [
-                    ('image', ImageChooserBlock()),
-                    ('quotation', blocks.StructBlock(
+            ('quotation', blocks.StructBlock(
                         [
-                            ('quote', TextBlock()),
-                            ('cite', TextBlock()),
+                            ('quote', RichTextBlock()),
+                            ('cite', TextBlock(required=False)),
                         ],
                         icon='openquote',
-                    )),
-                ],
-            ))
+                        template='blocks/blockquote.html',
+            )),
+            # ("carousel", blocks.StreamBlock(
+            #     [
+            #         ('image', ImageChooserBlock()),
+            #         ('quotation', blocks.StructBlock(
+            #             [
+            #                 ('quote', TextBlock()),
+            #                 ('cite', TextBlock()),
+            #             ],
+            #             icon='openquote',
+            #         )),
+            #     ],
+            # )),
+            # ('info', custom_blocks.InfoBlock()),
+            # ('faq', custom_blocks.FAQListBlock()),
+            ('call_to_action_1', custom_blocks.CallToAction1())
+            # ('call_to_action_1', blocks.StructBlock(
+            #     [
+            #         ('text', blocks.RichTextBlock( features=['bold', 'italic'], required=True)),
+            #         ('page', blocks.PageChooserBlock()),
+            #         ('button_text' , blocks.CharBlock(required=False, max_length=100)),
+            #     ],
+            #     label="CTA #1",
+                
+            # ))
 
         ],
         # block_counts= {
@@ -279,6 +353,9 @@ class BlogDetail(Page):
         context["prevPost"] = BlogDetail.objects.live().public().filter(first_published_at__lt=self.first_published_at).order_by('-first_published_at').first()
         context["nextPost"] = BlogDetail.objects.live().public().filter(first_published_at__gt=self.first_published_at).order_by('first_published_at').first()
         context["blog_categories"] = BlogCategories.objects.all()
+        # with context send data to blog_index_page.html für subscribe 
+        context["subscribe"] = Subscribe.objects.all()
+
         
 
         return context   

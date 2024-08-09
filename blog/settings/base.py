@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "images",
     "blogpage",
     "contact",
+    "blocks",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "wagtailcodeblock",
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
