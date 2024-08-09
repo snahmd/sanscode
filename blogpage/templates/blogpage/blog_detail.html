@@ -51,14 +51,36 @@
     <div class="container px-4">
       <div class="flex flex-col lg:flex-row justify-between gap-[58px]">
         <div class="post-content max-w-[850px]">
-          <!-- Single Conttent -->
+          <!-- Single Content -->
 
           <div class="single-content text-base font-medium text-neutral-950 dark:text-neutral-dark-950 leading-relaxed max-w-[850px]  [&>p:nth-child(1)]:text-[red]">
             
             {% image page.image max-800x500 as custom_image %}
               <img src="{{ custom_image.url }}" class="rounded-3xl mb-8" alt="{{ custom_image.alt }}">
             <div class="richtext">
-            {{ page.body }}
+            <!-- {{ page.body }} -->
+            {% for block in page.body %}
+              {% if block.block_type == "text" %}
+                <p>{{ block.value }}</p>
+              {% elif block.block_type == "image" %}
+                {% image block.value max-800x500 as custom_image %}
+                <img src="{{ custom_image.url }}" class="rounded-3xl mb-8" alt="{{ custom_image.alt }}">
+              {% elif block.block_type == "carousel" %}
+                {% for slide in block.value %}
+                  {% if slide.block_type == 'image' %}
+                    {% image slide.value max-800x500 as custom_image %}
+                    <img src="{{ custom_image.url }}" class="rounded-3xl mb-8" alt="{{ custom_image.alt }}">
+                  {% elif slide.block_type == 'quotation' %}
+                    <p>
+                      {{ slide.value.quote }}
+                      <strong>
+                        &mdash; {{ slide.value.cite }}
+                      </strong>
+                    </p>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
             </div>
           </div>
           <!-- Single Conttent -->
@@ -135,24 +157,25 @@
           <div class="relative single-comment-form mt-20 max-w-[850px]">
             <h3 class="font-bold text-5xl mb-8 text-neutral-950 dark:text-neutral-dark-950">Leave <span class="font-light"> a reply</span></h3>
             <div class="w-full" id="disqus_thread"></div>
-<script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
-    (function() { // DON'T EDIT BELOW THIS LINE
-    var d = document, s = d.createElement('script');
-    s.src = 'https://sanscode.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- Disqus script is here -->
+            <script>
+                /**
+                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+                /*
+                var disqus_config = function () {
+                this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+                */
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://sanscode.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
             <!-- <form action="">
               <div class="grid md:grid-cols-3 gap-4 mb-4 md:mb-0">
                 <input type="text" placeholder="Name" class="input-default">
