@@ -1,4 +1,4 @@
-{% load wagtailimages_tags %}
+{% load static wagtailimages_tags wagtailcore_tags wagtailuserbar %}
 
 <header class="main-header mx-auto w-full flex justify-center py-2 z-50 relative dark:bg-primary-dark-0">
     <div class="container flex justify-between items-center relative px-4">
@@ -44,30 +44,40 @@
         </li>
         <li class="relative"><a href="/contact/" class="menu-item">Contact</a></li>
       </ul>
+     
       <div class="flex justify-end align-middle content-center items-center relative gap-4">
         <div class="language-switcher py-4 relative z-10">
           <!-- BEGIN: Language Select Box -->
           <div class="relative size-6 z-10">
             <div class="language absolute inline-flex flex-col gap-[2px] overflow-hidden min-w-32 h-[24px] top-0 left-0">
-              <div class="language__el bg-neutral-0 dark:bg-neutral-dark-0 cursor-pointer is-active " data-lang="en">
-                <div class="language__link flex gap-2 items-center">
-                  <img class="language__img size-6" alt="en" src="/static/imgs/template/flag-england.svg" />
-                  <span class="language__text text-sm text-neutral-700 dark:text-neutral-dark-300">English</span>
-                </div>
-              </div>
               
-              <div class="language__el bg-neutral-0 dark:bg-neutral-dark-0 cursor-pointer" data-lang="tr">
-                <div class="language__link flex gap-2 items-center">
-                  <img class="language__img size-6" alt="vn" src="/static/imgs/template/turkey-flag.svg" />
-                  <span class="language__text text-sm text-neutral-700 dark:text-neutral-dark-300">Turkish</span>
+              {%if page %}
+             
+              
+                {% for translation in page.get_translations.live %}
+
+                    
+                      <div class="language__el bg-neutral-0 dark:bg-neutral-dark-0 cursor-pointer" data-lang="{{translation.locale.language_code}}">
+                        <a href="{% pageurl translation %}">
+                          <div class="language__link flex gap-2 items-center">
+                            <img class="language__img size-6" alt="vn" src="/static/imgs/template/{{translation.locale.language_code}}.svg" />
+                            <span class="language__text text-sm text-neutral-700 dark:text-neutral-dark-300">{{translation.locale.language_code}}</span>
+                        </div>
+                        </a>
+                      </div>
+                    
+
+                    
+              
+                {%endfor %}
+                <div class="language__el bg-neutral-0 dark:bg-neutral-dark-0 cursor-pointer is-active" data-lang="{{page.locale.language_code}}">
+                  <div class="language__link flex gap-2 items-center">
+                    <img class="language__img size-6" alt="vn" src="/static/imgs/template/{{page.locale.language_code}}.svg" />
+                    <span class="language__text text-sm text-neutral-700 dark:text-neutral-dark-300">{{page.locale.language_code}}</span>
+                  </div>
                 </div>
-              </div>
-              <div class="language__el bg-neutral-0 dark:bg-neutral-dark-0 cursor-pointer" data-lang="ge">
-                <div class="language__link flex gap-2 items-center">
-                  <img class="language__img size-6" alt="ge" src="/static/imgs/template/flag-germany.svg" />
-                  <span class="language__text text-sm text-neutral-700 dark:text-neutral-dark-300">German</span>
-                </div>
-              </div>
+              {% endif %}
+             
               
             </div>
           </div>

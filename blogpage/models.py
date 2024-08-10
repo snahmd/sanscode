@@ -117,6 +117,8 @@ class BlogIndex(Page):
     def get_context(self, request):
         context = super().get_context(request)
         context['blogpages'] = BlogDetail.objects.live().public().order_by('-first_published_at')
+        # filter with locale.language_code
+        context['blogpages'] = context['blogpages'].filter(locale__language_code=request.LANGUAGE_CODE)
         tag = request.GET.get('tag')
         if tag:
             # ignore case sensitive
@@ -148,7 +150,8 @@ class BlogIndex(Page):
             blogpages = paginator.page(paginator.num_pages)
             context["currentPage"] = paginator.num_pages
         context['blogpages'] = blogpages 
-        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at')[:6]
+        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at').filter(locale__language_code=request.LANGUAGE_CODE)[:6]
+
         
 
         return context
@@ -335,10 +338,10 @@ class BlogDetail(Page):
         FieldPanel('subtitle'),
         FieldPanel('body'),
         # FieldPanel('image'),
-        # FieldPanel('cta_url_one'),
-        # FieldPanel('cta_url_two'),
-        # FieldPanel('cta_url_three'),
-        # FieldPanel('cta_url_four'),
+        FieldPanel('cta_url_one'),
+        FieldPanel('cta_url_two'),
+        FieldPanel('cta_url_three'),
+        FieldPanel('cta_url_four'),
         FieldPanel('tags'),
         # InlinePanel('author_placement', label="Author"),
         InlinePanel('categories_placement', label="Categories"),
@@ -347,11 +350,15 @@ class BlogDetail(Page):
     def get_context(self, request):
         context = super().get_context(request)
         context['blogDetailPost'] = BlogDetail.objects.live().public().order_by('-first_published_at')
-        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at')[:6]
+        # filter with locale.language_code
+        context['blogDetailPost'] = context['blogDetailPost'].filter(locale__language_code=request.LANGUAGE_CODE)
+        print(context['blogDetailPost'])
+        
+        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at').filter(locale__language_code=request.LANGUAGE_CODE)[:6]
         # context["prevPost"] = BlogDetail.objects.live().public().filter(first_published_at__lt=self.first_published_at).order_by('-first_published_at').first()
         # if prevPost exist then send it
-        context["prevPost"] = BlogDetail.objects.live().public().filter(first_published_at__lt=self.first_published_at).order_by('-first_published_at').first()
-        context["nextPost"] = BlogDetail.objects.live().public().filter(first_published_at__gt=self.first_published_at).order_by('first_published_at').first()
+        context["prevPost"] = context['blogDetailPost'].filter(first_published_at__lt=self.first_published_at).order_by('-first_published_at').first()
+        context["nextPost"] = context['blogDetailPost'].filter(first_published_at__gt=self.first_published_at).order_by('first_published_at').first()
         context["blog_categories"] = BlogCategories.objects.all()
         # with context send data to blog_index_page.html für subscribe 
         context["subscribe"] = Subscribe.objects.all()

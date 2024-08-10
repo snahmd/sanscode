@@ -23,19 +23,20 @@ class HomePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel('subtitle', read_only=True),
+        FieldPanel('subtitle'),
         FieldPanel('body'),
         FieldPanel('image'),
     ]
      # context ile template'e veri gönderme
     def get_context(self, request):
         context = super().get_context(request)
-        context['blogpages'] = BlogDetail.objects.live().public()
+        context['blogpages'] = BlogDetail.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE).order_by('-first_published_at')
+
         context["featuredOwner"] = "admin"
         context["myName"] = "_sanscode"
        
         # # send in homepage img to template
         # context['homeImage'] = self.image
-        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at')[:6]
+        context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at').filter(locale__language_code=request.LANGUAGE_CODE)[:6]
        
         return context

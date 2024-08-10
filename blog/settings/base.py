@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "blocks",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
+    "wagtail.contrib.simple_translation",
+    "wagtail.locales",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
@@ -62,6 +64,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "blog.urls"
@@ -125,8 +128,18 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 
 USE_I18N = True
+USE_L10N = True
 
 USE_TZ = True
+
+WAGTAIL_I18N_ENABLED = True
+WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
+    ("en", "English"),
+    ("tr", "Turkish"),
+    ("de", "German"),
+    
+]
 
 
 # Static files (CSS, JavaScript, Images)
