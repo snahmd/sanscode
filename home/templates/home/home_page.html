@@ -1,30 +1,25 @@
 {% extends "base.html" %}
 {% load wagtailimages_tags %}
+{% load i18n %}
 
 {% block content %}
       <!--Hero 1-->
   <section class="relative py-20 lg:py-24 lg:mb-16">
     <div class="container px-4">
-      <h1 class="heading-1">Idea make fosters brainstorming <span class="font-light">and idea generation processes</span></h1>
+      <h1 class="heading-1">{{subtitle}} <span class="font-light">{{ subtitle_light }}</span></h1>
       <div class="swiper-container post-slider-4">
         <div class="swiper-wrapper pt-4">
+          {% for category in categories %}
           <div class="swiper-slide hover-up">
             <div class="w-full h-52 relative rounded-3xl overflow-hidden">
-              <a href="category.html"><img class="left-0 top-0 absolute rounded-3xl" src="/static/imgs/pages/img-01.png" /></a>
+              {% get_language_info for page.locale.language_code as lang %}
+              <a href="/{{lang.code}}/blog/?category={{category.slug}}">
+                {% image category.category_image width-500 as custom_image %}
+                <img class="left-0 top-0 absolute rounded-3xl" src="{{custom_image.url}}" />
+              </a>
               <div class="px-[13px] py-[9px] left-[10px] top-[150px] absolute bg-neutral-0 dark:bg-neutral-dark-0 rounded-[26px] justify-center items-center gap-2.5 inline-flex">
-                <a href="category.html" class="text-neutral-950 dark:text-neutral-dark-950 text-sm font-medium">Healthy</a>
-                <div class="w-[22px] h-[22px] relative">
-                  <div class="w-7 h-7 left-[-3px] top-[-3px] absolute bg-primary-light-950 rounded-full"></div>
-                  <div class="left-[3px] top-[5px] absolute text-center text-neutral-950 text-xs font-medium  leading-3">17</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide hover-up">
-            <div class="w-full h-52 relative rounded-3xl overflow-hidden">
-              <a href="category.html"><img class="left-0 top-0 absolute rounded-3xl" src="/static/imgs/pages/img-02.png" /></a>
-              <div class="px-[13px] py-[9px] left-[10px] top-[150px] absolute bg-neutral-0 dark:bg-neutral-dark-0 rounded-[26px] justify-center items-center gap-2.5 inline-flex">
-                <a href="category.html" class="text-neutral-950 dark:text-neutral-dark-950 text-sm font-medium">Trending</a>
+                {% get_language_info for page.locale.language_code as lang %}
+                <a href="/{{lang}}/blog/?category={{category.name}}" class="text-neutral-950 dark:text-neutral-dark-950 text-sm font-medium">{{category.name}}</a>
                 <div class="w-[22px] h-[22px] relative">
                   <div class="w-7 h-7 left-[-3px] top-[-3px] absolute bg-primary-light-950 rounded-full"></div>
                   <div class="left-[3px] top-[5px] absolute text-center text-neutral-950 text-xs font-medium  leading-3">32</div>
@@ -32,46 +27,12 @@
               </div>
             </div>
           </div>
-          <div class="swiper-slide hover-up">
-            <div class="w-full h-52 relative rounded-3xl overflow-hidden">
-              <a href="category.html"><img class="left-0 top-0 absolute rounded-3xl" src="/static/imgs/pages/img-03.png" /></a>
-              <div class="px-[13px] py-[9px] left-[10px] top-[150px] absolute bg-neutral-0 dark:bg-neutral-dark-0 rounded-[26px] justify-center items-center gap-2.5 inline-flex">
-                <a href="category.html" class="text-neutral-950 dark:text-neutral-dark-950 text-sm font-medium">Fashion</a>
-                <div class="w-[22px] h-[22px] relative">
-                  <div class="w-7 h-7 left-[-3px] top-[-3px] absolute bg-primary-light-950 rounded-full"></div>
-                  <div class="left-[3px] top-[5px] absolute text-center text-neutral-950 text-xs font-medium  leading-3">48</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide hover-up">
-            <div class="w-full h-52 relative rounded-3xl overflow-hidden">
-              <a href="category.html"><img class="left-0 top-0 absolute rounded-3xl" src="/static/imgs/pages/img-04.png" /></a>
-              <div class="px-[13px] py-[9px] left-[10px] top-[150px] absolute bg-neutral-0 dark:bg-neutral-dark-0 rounded-[26px] justify-center items-center gap-2.5 inline-flex">
-                <a href="category.html" class="text-neutral-950 dark:text-neutral-dark-950 text-sm font-medium">Technology</a>
-                <div class="w-[22px] h-[22px] relative">
-                  <div class="w-7 h-7 left-[-3px] top-[-3px] absolute bg-primary-light-950 rounded-full"></div>
-                  <div class="left-[3px] top-[5px] absolute text-center text-neutral-950 text-xs font-medium  leading-3">15</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide hover-up">
-            <div class="w-full h-52 relative rounded-3xl overflow-hidden">
-              <a href="category.html"><img class="left-0 top-0 absolute rounded-3xl" src="/static/imgs/pages/img-05.png" /></a>
-              <div class="px-[13px] py-[9px] left-[10px] top-[150px] absolute bg-neutral-0 dark:bg-neutral-dark-0 rounded-[26px] justify-center items-center gap-2.5 inline-flex">
-                <a href="category.html" class="text-neutral-950 dark:text-neutral-dark-950 text-sm font-medium">Travel</a>
-                <div class="w-[22px] h-[22px] relative">
-                  <div class="w-7 h-7 left-[-3px] top-[-3px] absolute bg-primary-light-950 rounded-full"></div>
-                  <div class="left-[3px] top-[5px] absolute text-center text-neutral-950 text-xs font-medium  leading-3">24</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
+          
         </div>
       </div>
       <div class="flex justify-between items-center gap-8 lg:gap-32 mt-12 flex-col lg:flex-row">
-        <p class="text-neutral-950 dark:text-neutral-dark-950 text-base font-medium lg:w-2/4">Goods and services. It involves entrepreneurship, management, marketing, finance, and many other aspects. Businesses aim to generate profit while meeting</p>
+        <p class="text-neutral-950 dark:text-neutral-dark-950 text-base font-medium lg:w-2/4">{{description}}</p>
         <form class="max-w-full overflow-hidden" action="">
           <div class="flex flex-col md:flex-row mb-4 md:bg-neutral-0 dark:bg-neutral-dark-200 rounded-full p-1">
             <input class="focus:outline-none transition duration-200 py-4 bg-neutral-0 dark:bg-neutral-dark-200 rounded-full pl-6 w-full mb-2 md:mb-0" type="text" placeholder="Your email address">
@@ -159,7 +120,7 @@
         <!--Post list 2-->
         <div class="col-span-2">
           <div class="flex flex-col gap-8">
-            {% for blog_post in  blogpages|slice:":3" %}
+            {% for blog_post in  blogpages|slice:":4" %}
             <div class="w-full p-2.5 lg:pr-8 rounded-3xl border-2 border-neutral-300 dark:border-neutral-dark-300 flex-col justify-start items-start gap-2.5 inline-flex  hover-up">
               <div class="justify-start items-center gap-11 flex flex-col md:flex-row">
                 <a href="single.html" class="rounded-[18px] overflow-hidden max-h-44 md:max-w-72">

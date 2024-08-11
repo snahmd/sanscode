@@ -26,8 +26,10 @@ class MessageUser(models.Model):
 register_snippet(MessageUser)
     
 class BlogAuthor(models.Model):
+    
     name = models.CharField(max_length=100)
     website = models.EmailField(max_length=100)
+    bio = models.TextField(max_length=300, default="Bio")
     image = models.ForeignKey(
         get_image_model(),
         null=True,
@@ -38,8 +40,40 @@ class BlogAuthor(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
+    
 
 register_snippet(BlogAuthor)
+
+class BlogAuthorPage(Page):
+    template = 'blogpage/blog_author_page.html'
+    author = models.ForeignKey(
+        'blogpage.BlogAuthor',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='ll',
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('author'),
+    ]
+
+    def __str__(self):
+        return self.author.name
+    
+    # update slug form author name
+    def save(self, *args, **kwargs):
+        self.slug = self.author.name
+        super(BlogAuthorPage, self).save(*args, **kwargs)
+    
+    def get_context(self, request):
+        context = super().get_context(request)
+        context["xxx"] = "ahmed"
+        return context
+
+register_snippet(BlogAuthorPage)
 
 class BlogDetailAuthorPlacement(models.Model):
     page = ParentalKey('BlogDetail', related_name='author_placement')
@@ -61,6 +95,13 @@ class BlogDetailAuthorPlacement(models.Model):
 class BlogCategories(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
+    category_image = models.ForeignKey(
+        get_image_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     def __str__(self):
         return self.name
@@ -69,20 +110,20 @@ register_snippet(BlogCategories)
 
 class BlogDetailCategoriesPlacement(models.Model):
     page = ParentalKey('BlogDetail', related_name='categories_placement')
-    categories = models.ForeignKey(
+    category = models.ForeignKey(
         'blogpage.BlogCategories',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
     )
-
+    
     panels = [
-        FieldPanel('categories'),
+        FieldPanel('category'),
     ]
 
     def __str__(self):
-        return self.categories.name    
+        return self.category.name    
 
 
   
@@ -129,7 +170,7 @@ class BlogIndex(Page):
         if category:
             # ignore case sensitive
             if category != "all":
-                context['blogpages'] = context['blogpages'].filter(categories_placement__categories__slug__iexact=category)    
+                context['blogpages'] = context['blogpages'].filter(categories_placement__category__slug__iexact=category)    
 
         context["blog_categories"] = BlogCategories.objects.all()
         context["featuredOwner"] = "admin"
@@ -343,7 +384,7 @@ class BlogDetail(Page):
         FieldPanel('cta_url_three'),
         FieldPanel('cta_url_four'),
         FieldPanel('tags'),
-        # InlinePanel('author_placement', label="Author"),
+        InlinePanel('author_placement', label="Author"),
         InlinePanel('categories_placement', label="Categories"),
     ] 
     # context ile template'e veri gönderme

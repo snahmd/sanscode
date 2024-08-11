@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% load wagtailimages_tags %}
+{% load i18n %}
+
 
 {% block content %}
       
@@ -17,15 +19,27 @@
             <img src="{{  custom_image.url }}" class="h-[400px] w-full object-cover" />
           </a>
           <div class="flex-col justify-start items-start gap-3.5 flex">
+            {% for placement in blog_post.categories_placement.all %}
             <div class="justify-start items-center gap-5 inline-flex">
-              <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
-                <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
+              {% get_language_info for page.locale.language_code as lang %}
+              <a href="/{{lang.code}}/blog/?category={{ placement.category.slug }}" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
+                <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{placement.category.name}}</div>
               </a>
+              
               <div class="justify-start items-center gap-2 flex">
-                <a href="#"><img class="w-9 h-9 rounded-3xl" src="/static/avatar/{{ blog_post.owner}}.JPG" /></a>
-                <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700 uppercase"><a href="#">{{ blog_post.owner}}</a> - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}</div>
+                {% for placement in blog_post.author_placement.all|slice:":1" %}
+                  <a href="#">
+                    {% image placement.author.image width-36 as custom_image %}
+                    <img class="w-9 h-9 rounded-3xl" src="{{custom_image.url}}" />
+                  </a>
+                  <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700 uppercase">
+                    <a href="#">{{ placement.author.name }}</a> 
+                  </div>
+                {% endfor %}
+                - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}
               </div>
             </div>
+            {% endfor %}
             <h3><a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="{{ blog_post.url }}">{{ blog_post.title}}</a></h3>
           </div>
         </div>

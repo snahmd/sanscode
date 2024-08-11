@@ -4,14 +4,19 @@ from wagtail.models import Page
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField
 from wagtail.images import get_image_model
-from blogpage.models import BlogDetail
+from blogpage.models import BlogDetail, BlogCategories
+
+
+# Create your models here.
 
 class HomePage(Page):
 
     # template = 'home/home_page.html'
     max_count = 1
 
-    subtitle = models.CharField(max_length=100, blank=True, null=True)
+    subtitle = models.CharField(max_length=150, blank=True, null=True)
+    subtitle_light = models.CharField(max_length=150, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
     body = RichTextField(blank=True)
 
     image = models.ForeignKey(
@@ -24,6 +29,8 @@ class HomePage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('subtitle'),
+        FieldPanel('subtitle_light'),
+        FieldPanel('description'),
         FieldPanel('body'),
         FieldPanel('image'),
     ]
@@ -31,9 +38,13 @@ class HomePage(Page):
     def get_context(self, request):
         context = super().get_context(request)
         context['blogpages'] = BlogDetail.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE).order_by('-first_published_at')
-
+        context['categories'] = BlogCategories.objects.all()
+       
         context["featuredOwner"] = "admin"
         context["myName"] = "_sanscode"
+        context["subtitle"] = self.subtitle
+        context["subtitle_light"] = self.subtitle_light
+        context["description"] = self.description
        
         # # send in homepage img to template
         # context['homeImage'] = self.image

@@ -2,6 +2,7 @@
 {% load wagtailcore_tags %}
 {% load static %}
 {% load wagtailimages_tags %}
+{% load i18n %}
 
 {% block content %}
 
@@ -24,17 +25,22 @@
       </div>
       <div class="flex flex-col gap-4 items-center justify-center text-center">
         <div class="justify-center items-center gap-4 flex flex-col md:flex-row">
-          {% for iter in page.categories_placement.all  %}
-            <a href="/blog/?category={{ iter.categories.slug }}" class="inline-flex  px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300 justify-center items-center gap-2.5">
-              <span class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{ iter.categories.name }}</span>
+          {% for placement in page.categories_placement.all  %}
+            {% get_language_info for page.locale.language_code as lang %}
+            <a href="/{{lang.code}}/blog/?category={{ placement.category.slug }}" class="inline-flex  px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300 justify-center items-center gap-2.5">
+              <span class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{ placement.category.name }}</span>
             </a>
           {% endfor %}
           <div class="justify-start items-center gap-2 flex">
             {% for iter in page.author_placement.all  %}
-              {% image iter.author.image width-500 as custom_image %}
-              <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="{{custom_image.url}}" /></a>
+              
+              {% get_language_info for page.locale.language_code as lang %}
+              <a href="/{{lang.code}}/blog/?{{iter.author}}">
+                {% image iter.author.image width-500 as custom_image %}
+                <img class="w-9 h-9 rounded-3xl" src="{{custom_image.url}}" />
+              </a>
               <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">
-                <a href="author.html">{{iter.author.name}} - </a> </div>
+                <a href="/{{iter.author.name}}">{{iter.author.name}} - </a> </div>
             {% endfor %} 
             {{page.latest_revision_created_at|date:"d.m.Y"}}
           </div>
@@ -263,11 +269,13 @@
             </div>
           </div>
           <!-- Category box -->
+          
           <div class="flex flex-col gap-4">
             <h4 class="text-2xl text-neutral-950 dark:text-neutral-dark-950 font-bold">Explore <span class="font-light">Categories</span></h4>
             <div class="justify-start items-start gap-2 inline-flex flex-wrap">
               {% for i in blog_categories %}  
-                <a class="button-7 hover-up" href="/blog/?category={{ i.slug }}">{{i.name}}</a>
+                {% get_language_info for page.locale.language_code as lang %}
+                <a class="button-7 hover-up" href="/{{lang.code}}/blog/?category={{ i.slug }}">{{i.name}}</a>
               {% endfor %}
             </div>
           </div>
