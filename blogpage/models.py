@@ -8,6 +8,8 @@ from wagtail.images import get_image_model
 # import register for django
 from wagtail.snippets.models import register_snippet
 
+from wagtail.contrib.routable_page.models import RoutablePageMixin, path, re_path
+
 
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -24,7 +26,8 @@ class MessageUser(models.Model):
     
 
 register_snippet(MessageUser)
-    
+
+  
 class BlogAuthor(models.Model):
     
     name = models.CharField(max_length=100)
@@ -41,7 +44,7 @@ class BlogAuthor(models.Model):
     def __str__(self):
         return self.name
     
-    
+
     
 
 register_snippet(BlogAuthor)
@@ -128,7 +131,7 @@ class BlogDetailCategoriesPlacement(models.Model):
 
   
 
-class BlogIndex(Page):
+class BlogIndex(RoutablePageMixin, Page):
 
     # template = 'home/home_page.html'
     template = 'blogpage/blog_index_page.html'
@@ -154,6 +157,21 @@ class BlogIndex(Page):
         FieldPanel('body'),
         FieldPanel('image'),
     ]
+
+    @path('tag/<str:tag>/', name='tag')
+    def blog_posts_by_tag(self, request, tag=None):
+        posts = BlogDetail.objects.live().public().filter(tags__name__iexact=tag)
+        print(posts)
+        return self.render(
+            request, 
+            context_overrides={
+                'posts': posts,
+                "tag": tag
+            },
+            template= "blogpage/blog_tag_page.html"
+        )
+
+
     # context ile template'e veri gönderme
     def get_context(self, request):
         context = super().get_context(request)
@@ -219,6 +237,7 @@ from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 
+from wagtail.models import TranslatableMixin, BootstrapTranslatableMixin  
 class Author(models.Model):
     name = models.CharField(max_length=100)
     bio = models.TextField()
@@ -234,6 +253,7 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 from wagtail.contrib.forms.models import AbstractFormField
