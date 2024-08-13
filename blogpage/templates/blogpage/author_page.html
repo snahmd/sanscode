@@ -9,6 +9,8 @@
 
 {% block content %}
 <div class="header-bg absolute top-0 left-0 right-0 -z-50 h-[1100px] bg-gradient-to-b from-primary-light-950/15 to-transparent max-h-[1100px] overflow-hidden w-full"></div>
+
+{% get_language_info for page.locale.language_code as lang %}
 <section class="py-12">
     <div class="container px-4">
       <div class="w-full rounded-[26px] bg-gradient-to-t from-primary-light-950 via-primary-light-300 to-primary-light-200 p-1.5">

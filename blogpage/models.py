@@ -13,12 +13,12 @@ from django.template.defaultfilters import slugify
 
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from wagtail.models import TranslatableMixin, BootstrapTranslatableMixin  
 
 
 
   
-class BlogAuthor(models.Model):
+class BlogAuthor(TranslatableMixin, models.Model):
     
     name = models.CharField(max_length=100)
     website = models.EmailField(max_length=100)
@@ -41,15 +41,21 @@ class BlogAuthor(models.Model):
     slug = models.SlugField(max_length=100, blank=True, null=True)
     url = models.CharField(max_length=100, blank=True, null=True)
     # update url on slug change
+
     def save(self, *args, **kwargs):
         self.slug =  slugify(self.name)
-        self.url = f"/blog/author/{self.slug}/"
+        self.url = f"/blog/author/{self.id}/{self.slug}/"
         super(BlogAuthor, self).save(*args, **kwargs)
+
+    
+
 
     def __str__(self):
         return self.name
     
-
+    class Meta(TranslatableMixin.Meta):
+        verbose_name = "Author"
+        verbose_name_plural = "Authors"
     
 
 register_snippet(BlogAuthor)
@@ -166,11 +172,17 @@ class BlogIndex(RoutablePageMixin, Page):
             },
             template= "blogpage/blog_category_page.html"
         )
-    @path('author/<str:author>/', name='author')
-    def blog_posts_by_author(self, request, author=None):
-        posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
-        author_instance = BlogAuthor.objects.get(name__iexact=author)
-       
+    
+    
+    @path('author/<int:author_id>/<str:author_slug>/', name='author')
+
+    def blog_posts_by_author(self, request, author_id=None, author_slug=None):
+        posts = BlogDetail.objects.live().public().filter(author_placement__author__id=author_id).filter(locale__language_code=request.LANGUAGE_CODE)
+        author_instance = BlogAuthor.objects.get(id=author_id)
+        # i want to keyword argument for author id
+
+
+
         return self.render(
             request, 
             context_overrides={
@@ -179,6 +191,23 @@ class BlogIndex(RoutablePageMixin, Page):
             },
             template= "blogpage/author_page.html"
         )
+    # @path('author/<str:author>/', name='author')
+
+    # def blog_posts_by_author(self, request, author=None):
+    #     posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
+    #     author_instance = BlogAuthor.objects.get(name__iexact=author)
+    #     # i want to keyword argument for author id
+
+
+
+    #     return self.render(
+    #         request, 
+    #         context_overrides={
+    #             'posts': posts,
+    #             "author": author_instance
+    #         },
+    #         template= "blogpage/author_page.html"
+    #     )
 
 
     # context ile template'e veri gönderme
@@ -251,7 +280,7 @@ from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 
-from wagtail.models import TranslatableMixin, BootstrapTranslatableMixin  
+
 
 
 

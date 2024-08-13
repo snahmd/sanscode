@@ -35,12 +35,12 @@
             {% for iter in page.author_placement.all  %}
               
               {% get_language_info for page.locale.language_code as lang %}
-              <a href="/{{lang.code}}/blog/?{{iter.author}}">
+              <a href="{{iter.author.url}}">
                 {% image iter.author.image width-500 as custom_image %}
                 <img class="w-9 h-9 rounded-3xl" src="{{custom_image.url}}" />
               </a>
               <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">
-                <a href="/{{iter.author.name}}">{{iter.author.name}} - </a> </div>
+                <a href="{{iter.author.url}}">{{iter.author.name}} - </a> </div>
             {% endfor %} 
             {{page.latest_revision_created_at|date:"d.m.Y"}}
           </div>
