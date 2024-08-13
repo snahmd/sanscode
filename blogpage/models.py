@@ -9,23 +9,13 @@ from wagtail.images import get_image_model
 from wagtail.snippets.models import register_snippet
 
 from wagtail.contrib.routable_page.models import RoutablePageMixin, path, re_path
-
+from django.template.defaultfilters import slugify
 
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-class MessageUser(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
-    
-
-register_snippet(MessageUser)
 
   
 class BlogAuthor(models.Model):
@@ -40,6 +30,21 @@ class BlogAuthor(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    x = models.CharField(max_length=100, blank=True, null=True)
+    facebook = models.CharField(max_length=100, blank=True, null=True)
+    linkedin = models.CharField(max_length=100, blank=True, null=True)
+    github = models.CharField(max_length=100, blank=True, null=True)
+    behance = models.CharField(max_length=100, blank=True, null=True)
+    dribbble = models.CharField(max_length=100, blank=True, null=True)
+    instagram = models.CharField(max_length=100, blank=True, null=True)
+
+    slug = models.SlugField(max_length=100, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    # update url on slug change
+    def save(self, *args, **kwargs):
+        self.slug =  slugify(self.name)
+        self.url = f"/blog/author/{self.slug}/"
+        super(BlogAuthor, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -49,34 +54,6 @@ class BlogAuthor(models.Model):
 
 register_snippet(BlogAuthor)
 
-class BlogAuthorPage(Page):
-    template = 'blogpage/blog_author_page.html'
-    author = models.ForeignKey(
-        'blogpage.BlogAuthor',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='ll',
-    )
-
-    content_panels = Page.content_panels + [
-        FieldPanel('author'),
-    ]
-
-    def __str__(self):
-        return self.author.name
-    
-    # update slug form author name
-    def save(self, *args, **kwargs):
-        self.slug = self.author.name
-        super(BlogAuthorPage, self).save(*args, **kwargs)
-    
-    def get_context(self, request):
-        context = super().get_context(request)
-        context["xxx"] = "ahmed"
-        return context
-
-register_snippet(BlogAuthorPage)
 
 class BlogDetailAuthorPlacement(models.Model):
     page = ParentalKey('BlogDetail', related_name='author_placement')
@@ -97,7 +74,8 @@ class BlogDetailAuthorPlacement(models.Model):
     
 class BlogCategories(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100)
+    slug = models.SlugField(max_length=100, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
     category_image = models.ForeignKey(
         get_image_model(),
         null=True,
@@ -105,6 +83,11 @@ class BlogCategories(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
+    def save(self, *args, **kwargs):
+        self.slug =  slugify(self.name)
+        self.url = f"/blog/category/{self.slug}/"
+        super(BlogCategories, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -160,7 +143,7 @@ class BlogIndex(RoutablePageMixin, Page):
 
     @path('tag/<str:tag>/', name='tag')
     def blog_posts_by_tag(self, request, tag=None):
-        posts = BlogDetail.objects.live().public().filter(tags__name__iexact=tag)
+        posts = BlogDetail.objects.live().public().filter(tags__name__iexact=tag).filter(locale__language_code=request.LANGUAGE_CODE)
         print(posts)
         return self.render(
             request, 
@@ -169,6 +152,32 @@ class BlogIndex(RoutablePageMixin, Page):
                 "tag": tag
             },
             template= "blogpage/blog_tag_page.html"
+        )
+    
+    @path('category/<str:category>/', name='category')
+    def blog_posts_by_category(self, request, category=None):
+        posts = BlogDetail.objects.live().public().filter(categories_placement__category__slug__iexact=category).filter(locale__language_code=request.LANGUAGE_CODE)
+        print(posts)
+        return self.render(
+            request, 
+            context_overrides={
+                'posts': posts,
+                "category": category
+            },
+            template= "blogpage/blog_category_page.html"
+        )
+    @path('author/<str:author>/', name='author')
+    def blog_posts_by_author(self, request, author=None):
+        posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
+        author_instance = BlogAuthor.objects.get(name__iexact=author)
+       
+        return self.render(
+            request, 
+            context_overrides={
+                'posts': posts,
+                "author": author_instance
+            },
+            template= "blogpage/author_page.html"
         )
 
 
@@ -225,6 +234,11 @@ class BlogPageTag(TaggedItemBase):
         related_name='tagged_items',
         on_delete=models.CASCADE
     )
+    url = models.CharField(max_length=100, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.url = f"/blog/tag/{self.tag.slug}/"
+        super(BlogPageTag, self).save(*args, **kwargs)
 
 from wagtail.fields import StreamField
 from wagtail.blocks import TextBlock, BlockQuoteBlock, RichTextBlock
@@ -238,21 +252,7 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from wagtail.models import TranslatableMixin, BootstrapTranslatableMixin  
-class Author(models.Model):
-    name = models.CharField(max_length=100)
-    bio = models.TextField()
-    website = models.EmailField(max_length=100)
-    image = models.ForeignKey(
-        get_image_model(),
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-   
 
-    def __str__(self):
-        return self.name
 
 
 
@@ -315,7 +315,6 @@ class BlogDetail(Page):
             ('text', custom_blocks.TextBlock()),
             ('document', DocumentChooserBlock()),
             ('page', blocks.PageChooserBlock( required=False)),
-            ('author', SnippetChooserBlock('blogpage.Author')),
             ('info', custom_blocks.InfoBlock()),
             ('faq', custom_blocks.FAQListBlock()),
             ('carousel', custom_blocks.CarouselBlock()),
@@ -398,7 +397,7 @@ class BlogDetail(Page):
     content_panels = Page.content_panels + [
         FieldPanel('subtitle'),
         FieldPanel('body'),
-        # FieldPanel('image'),
+        FieldPanel('image'),
         FieldPanel('cta_url_one'),
         FieldPanel('cta_url_two'),
         FieldPanel('cta_url_three'),
