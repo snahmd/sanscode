@@ -4,7 +4,10 @@ from wagtail.models import Page
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField
 from wagtail.images import get_image_model
-from blogpage.models import BlogDetail, BlogCategories
+from blogpage.models import BlogDetail, BlogCategories, BlogAuthor
+from standardpage.models import StandardPage
+from contact.models import ContactPage
+
 
 
 # Create your models here.
@@ -49,5 +52,10 @@ class HomePage(Page):
         # # send in homepage img to template
         # context['homeImage'] = self.image
         context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at').filter(locale__language_code=request.LANGUAGE_CODE)[:6]
-       
+        context["standardpages"] = StandardPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE)
+        context["contactpage"] = ContactPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE)
+        
+        
+
+
         return context

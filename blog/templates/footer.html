@@ -36,25 +36,8 @@
           </div>
         </div>
 
-        <div class="grid grid-cols- lg:grid-cols-2 md:grid-cols-2">
-          <!-- <div class="mb-4">
-            <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Category</h6>
-            <ul>
-              <li class="footer-menu">
-                <a href="category.html" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Trending</a>
-              </li>
-              <li class="footer-menu">
-                <a href="category-2.html" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Fashion</a>
-              </li>
-              <li class="footer-menu">
-                <a href="category-3.html" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Technology</a>
-              </li>
-              <li class="footer-menu">
-                <a href="category-4.html" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Healthy</a>
-              </li>
-            </ul>
-          </div> -->
-          <div></div>
+        <div class="grid grid-cols-2 lg:grid-cols-2 md:grid-cols-2">
+          
           <div class="mb-4">
             <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Pages</h6>
             <ul>
@@ -62,21 +45,48 @@
                 <a href="/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Home</a>
               </li>
              
+              {% for cpage in contactpage %}
+              <li class="footer-menu">
+                <a href="{{lang}}/contact/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">{{cpage.title}}</a>
+              </li>
+              {% endfor %}
+              <li class="footer-menu">
+                {% if page.locale.language_code == 'en' %}
+                <a href="/blog/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Blog</a>
+                {% elif page.locale.language_code == 'de' %}
+                <a href="/de/blog/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Blog</a>
+                {% elif page.locale.language_code == 'tr' %}
+                <a href="/tr/blog/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Yazılar</a>
+                {% endif %}
 
-              <li class="footer-menu">
-                <a href="/contact/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Contact</a>
               </li>
-              
+            </ul>
+          </div>
+          <div class="mb-4">
+            <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Legal</h6>
+            <!-- add from satdardpage model title context -->
+            
+            <ul>
+              {% for spage in standardpages %}
               <li class="footer-menu">
-                <a href="/blog/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Featured Posts</a>
+                <a href="{{spage.url}}" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">{{spage.title}}</a>
               </li>
+             {% endfor %}
+
+             
             </ul>
           </div>
           
         </div>
       </div>
       <div class="pt-8">
-        <p class="text-sm text-neutral-700 dark:text-neutral-dark-700">© _sanscode 2024. Developed with <a href="https://alithemes.com" class="text-neutral-950 dark:text-neutral-dark-950">Wagtail</a></p>
+        {% if page.locale.language_code == 'en' %}
+        <p class="text-sm text-neutral-700 dark:text-neutral-dark-700">© _sanscode 2024. Developed with <a href="https://wagtail.org" class="text-neutral-950 dark:text-neutral-dark-950">Wagtail</a></p>
+        {% elif page.locale.language_code == 'de' %}
+        <p class="text-sm text-neutral-700 dark:text-neutral-dark-700">© _sanscode 2024. Entwickelt mit <a href="https://wagtail.org" class="text-neutral-950 dark:text-neutral-dark-950">Wagtail</a></p>
+        {% elif page.locale.language_code == 'tr' %}
+        <p class="text-sm text-neutral-700 dark:text-neutral-dark-700">© _sanscode 2024. Site <a href="https://wagtail.org" class="text-neutral-950 dark:text-neutral-dark-950">Wagtail</a> ile geliştirildi.</p>
+        {% endif %}
       </div>
     </div>
   </footer>

@@ -1,5 +1,6 @@
 {% load static wagtailimages_tags wagtailcore_tags wagtailuserbar %}
 
+
 <header class="main-header mx-auto w-full flex justify-center py-2 z-50 relative dark:bg-primary-dark-0">
     <div class="container flex justify-between items-center relative px-4">
       <h1>
@@ -11,14 +12,33 @@
       </h1>
       <ul class="xl:flex hidden">
         <li class="relative group">
+          {% if page.locale.language_code == 'en' %}
           <a class="menu-item" href="/">Home</a>
+          {% elif page.locale.language_code == 'de' %}
+          <a class="menu-item" href="/">Startseite</a>
+          {% elif page.locale.language_code == 'tr' %}
+          <a class="menu-item" href="/">Anasayfa</a>
+          {% endif %}
         </li>
        
         <li class="group">
-          <a href="/blog/" class="menu-item group-hover:border-white">Featured Posts</a>
+          {% if page.locale.language_code == 'en' %}
+          <a href="/blog/" class="menu-item group-hover:border-white">Blog</a>
+          {% elif page.locale.language_code == 'de' %}
+          <a href="/blog/" class="menu-item group-hover:border-white">Blog</a>
+          {% elif page.locale.language_code == 'tr' %}
+          <a href="/blog/" class="menu-item group-hover:border-white">Yazılar</a>
+          {% endif %}
           <!-- MEGA MENU CONTENT -->
           <div class="w-full px-12 py-12 rounded-2xl bg-neutral-0 dark:bg-neutral-dark-0 shadow-sm absolute top-full left-0 mt-8 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-4 transition-all duration-500">
+            {% if page.locale.language_code == 'en' %}
             <h3 class="text-5xl mb-8 text-neutral-950 dark:text-neutral-dark-950">Featured <span class="font-bold">Posts</span></h3>
+            {% elif page.locale.language_code == 'de' %}
+            <h3 class="text-5xl mb-8 text-neutral-950 dark:text-neutral-dark-950">Ausgewählte <span class="font-bold">Beiträge</span></h3>
+            {% elif page.locale.language_code == 'tr' %}
+            <h3 class="text-5xl mb-8 text-neutral-950 dark:text-neutral-dark-950">Öne Çıkan <span class="font-bold">Yazılar</span></h3>
+            {% endif %}
+
             <div class="grid grid-cols-3 w-full gap-10">
               {% for blog_post in featured_posts_for_header %}
               <div class="flex gap-6 content-center hover-up">
@@ -42,7 +62,9 @@
           </div>
           <!-- END MEGA MENU CONTENT -->
         </li>
-        <li class="relative"><a href="/contact/" class="menu-item">Contact</a></li>
+        {% for cpage in contactpage %}
+        <li class="relative"><a href="/contact/" class="menu-item">{{cpage.title}}</a></li>
+        {% endfor %}
       </ul>
      
       <div class="flex justify-end align-middle content-center items-center relative gap-4">
@@ -58,6 +80,7 @@
 
                     
                       <div class="language__el bg-neutral-0 dark:bg-neutral-dark-0 cursor-pointer" data-lang="{{translation.locale.language_code}}">
+                        
                         <a href="{% pageurl translation %}">
                           <div class="language__link flex gap-2 items-center">
                             <img class="language__img size-6" alt="vn" src="/static/imgs/template/{{translation.locale.language_code}}.svg" />

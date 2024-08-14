@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "blogpage",
     "contact",
     "blocks",
+    "standardpage",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.simple_translation",

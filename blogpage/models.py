@@ -15,10 +15,17 @@ from django.template.defaultfilters import slugify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from wagtail.models import TranslatableMixin, BootstrapTranslatableMixin  
 
+from standardpage.models import StandardPage
+
+
+
+
+
 
 
   
 class BlogAuthor(TranslatableMixin, models.Model):
+
     
     name = models.CharField(max_length=100)
     website = models.EmailField(max_length=100)
@@ -149,6 +156,7 @@ class BlogIndex(RoutablePageMixin, Page):
 
     @path('tag/<str:tag>/', name='tag')
     def blog_posts_by_tag(self, request, tag=None):
+
         posts = BlogDetail.objects.live().public().filter(tags__name__iexact=tag).filter(locale__language_code=request.LANGUAGE_CODE)
         print(posts)
         return self.render(
@@ -174,29 +182,12 @@ class BlogIndex(RoutablePageMixin, Page):
         )
     
     
-    @path('author/<int:author_id>/<str:author_slug>/', name='author')
+    # @path('author/<int:author_id>/<str:author_slug>/', name='author')
 
-    def blog_posts_by_author(self, request, author_id=None, author_slug=None):
-        posts = BlogDetail.objects.live().public().filter(author_placement__author__id=author_id).filter(locale__language_code=request.LANGUAGE_CODE)
-        author_instance = BlogAuthor.objects.get(id=author_id)
-        # i want to keyword argument for author id
-
-
-
-        return self.render(
-            request, 
-            context_overrides={
-                'posts': posts,
-                "author": author_instance
-            },
-            template= "blogpage/author_page.html"
-        )
-    # @path('author/<str:author>/', name='author')
-
-    # def blog_posts_by_author(self, request, author=None):
-    #     posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
-    #     author_instance = BlogAuthor.objects.get(name__iexact=author)
-    #     # i want to keyword argument for author id
+    # def blog_posts_by_author(self, request, author_id=None, author_slug=None):
+    #     posts = BlogDetail.objects.live().public().filter(author_placement__author__id=author_id).filter(locale__language_code=request.LANGUAGE_CODE)
+    #     author_instance = BlogAuthor.objects.get(id=author_id)
+       
 
 
 
@@ -208,10 +199,34 @@ class BlogIndex(RoutablePageMixin, Page):
     #         },
     #         template= "blogpage/author_page.html"
     #     )
+    @path('author/<str:author>/', name='author')
+
+    def blog_posts_by_author(self, request, author=None):
+        posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
+     
+        # get all objects
+        author_instance = BlogAuthor.objects.all().filter(slug__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE).first()
+        print("....")
+        print(author_instance.url)
+        # change page url according to author
+        
+        
+       
+
+
+        return self.render(
+            request, 
+            context_overrides={
+                'posts': posts,
+                "author": author_instance
+            },
+            template= "blogpage/author_page.html"
+        )
 
 
     # context ile template'e veri gönderme
     def get_context(self, request):
+
         context = super().get_context(request)
         context['blogpages'] = BlogDetail.objects.live().public().order_by('-first_published_at')
         # filter with locale.language_code
@@ -248,7 +263,8 @@ class BlogIndex(RoutablePageMixin, Page):
             context["currentPage"] = paginator.num_pages
         context['blogpages'] = blogpages 
         context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at').filter(locale__language_code=request.LANGUAGE_CODE)[:6]
-
+        context["standardpages"] = StandardPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE)
+        
         
 
         return context
@@ -451,7 +467,11 @@ class BlogDetail(Page):
         context["blog_categories"] = BlogCategories.objects.all()
         # with context send data to blog_index_page.html für subscribe 
         context["subscribe"] = Subscribe.objects.all()
-
+        context["standardpages"] = StandardPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE)
         
+
+       
+
+
 
         return context   
