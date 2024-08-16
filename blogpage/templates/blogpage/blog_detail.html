@@ -12,35 +12,36 @@
       <div class="flex w-full justify-center item-center mb-16">
         <!-- breadcrumb -->
         <div class="hidden md:flex gap-2.5  justify-start items-center h-12 px-7 py-3.5 bg-neutral-0 dark:bg-neutral-dark-0 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300">
-          <a href="index.html" class="text-neutral-700 dark:text-neutral-dark-700 text-base font-medium  leading-normal">Home</a>
+          <a href="{{parent_parent.url}}" class="text-neutral-700 dark:text-neutral-dark-700 text-base font-medium  leading-normal">
+            {{ parent_parent.title }}
+          </a>
           <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" class="fill-neutral-700 dark:fill-neutral-dark-700">
             <path d="M1.52344 11.9961C1.24219 11.9961 0.992188 11.9023 0.804688 11.7148C0.398438 11.3398 0.398438 10.6836 0.804688 10.3086L5.08594 5.99609L0.804688 1.71484C0.398438 1.33984 0.398438 0.683594 0.804688 0.308594C1.17969 -0.0976562 1.83594 -0.0976562 2.21094 0.308594L7.21094 5.30859C7.61719 5.68359 7.61719 6.33984 7.21094 6.71484L2.21094 11.7148C2.02344 11.9023 1.77344 11.9961 1.52344 11.9961Z" />
           </svg>
-          <a href="category.html" class="text-neutral-700 dark:text-neutral-dark-700 text-base font-medium leading-normal">Blog</a>
+          <a href="{{parent.url}}" class="text-neutral-700 dark:text-neutral-dark-700 text-base font-medium leading-normal">{{parent.title}}</a>
           <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" class="fill-neutral-700 dark:fill-neutral-dark-700">
             <path d="M1.52344 11.9961C1.24219 11.9961 0.992188 11.9023 0.804688 11.7148C0.398438 11.3398 0.398438 10.6836 0.804688 10.3086L5.08594 5.99609L0.804688 1.71484C0.398438 1.33984 0.398438 0.683594 0.804688 0.308594C1.17969 -0.0976562 1.83594 -0.0976562 2.21094 0.308594L7.21094 5.30859C7.61719 5.68359 7.61719 6.33984 7.21094 6.71484L2.21094 11.7148C2.02344 11.9023 1.77344 11.9961 1.52344 11.9961Z" />
           </svg>
-          <span class="text-neutral-900 dark:text-neutral-dark-950 text-base font-bold leading-snug">It seeks to inspire and motivate individuals </span>
+          <span class="text-neutral-900 dark:text-neutral-dark-950 text-base font-bold leading-snug">{{page.title}}</span>
         </div>
       </div>
       <div class="flex flex-col gap-4 items-center justify-center text-center">
         <div class="justify-center items-center gap-4 flex flex-col md:flex-row">
-          {% for placement in page.categories_placement.all  %}
-            {% get_language_info for page.locale.language_code as lang %}
-            <a href="/{{lang.code}}/blog/?category={{ placement.category.slug }}" class="inline-flex  px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300 justify-center items-center gap-2.5">
-              <span class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{ placement.category.name }}</span>
+          {% for category in categories %}
+            <a href="{{ category.url }}" class="inline-flex  px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300 justify-center items-center gap-2.5">
+              <span class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{ category.name }}</span>
             </a>
           {% endfor %}
           <div class="justify-start items-center gap-2 flex">
-            {% for iter in page.author_placement.all  %}
+            {% for iter in authors %}
               
               {% get_language_info for page.locale.language_code as lang %}
-              <a href="{{iter.author.url}}">
-                {% image iter.author.image width-500 as custom_image %}
-                <img class="w-9 h-9 rounded-3xl" src="{{custom_image.url}}" />
+              <a href="{{iter.url}}">
+                {% image iter.image width-500 as custom_image %}
+                <img class="w-9 h-9 rounded-3xl object-cover" src="{{custom_image.url}}" />
               </a>
               <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">
-                <a href="{{iter.author.url}}">{{iter.author.name}} - </a> </div>
+                <a href="{{iter.url}}">{{iter.name}} - </a> </div>
             {% endfor %} 
             {{page.latest_revision_created_at|date:"d.m.Y"}}
           </div>
@@ -72,15 +73,15 @@
             
             
           </div>
-          <!-- Single Conttent -->
+          <!-- Single Tags and Share -->
 
           <div class="single-bottom mt-16 py-8 border-t border-neutral-300 dark:border-neutral-dark-300 text-lg font-bold text-neutral-950 dark:text-neutral-dark-950 leading-relaxed max-w-[850px]">
             <div class="flex flex-col md:flex-row justify-between gap-8">
               <div>
                 <h6 class="text-lg font-bold mb-4">Popular Tag</h6>
                 <div class="flex flex-wrap gap-2">
-                  {% for tag in page.tags.all %}
-                  <a href="/blog/?tag={{ tag.slug }}" class="hover-up px-5 py-2 rounded-full border border-neutral-300 dark:border-neutral-dark-300  text-base font-medium hover:bg-neutral-300  hover:dark:bg-neutral-dark-300 transition-all duration-300">{{tag.name}}</a>
+                  {% for tag in tags %}
+                  <a href="/{{parent.slug}}/tag/{{ tag.slug }}" class="hover-up px-5 py-2 rounded-full border border-neutral-300 dark:border-neutral-dark-300  text-base font-medium hover:bg-neutral-300  hover:dark:bg-neutral-dark-300 transition-all duration-300">{{tag.name}}</a>
                   {% endfor %}
                 </div>
               </div>

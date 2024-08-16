@@ -16,6 +16,7 @@ class TagSnippetsViewset(SnippetViewSet):
     panels = [
         FieldPanel('name'),
         FieldPanel('slug'),
+       
     ]
 
   

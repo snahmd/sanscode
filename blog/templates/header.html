@@ -23,11 +23,11 @@
        
         <li class="group">
           {% if page.locale.language_code == 'en' %}
-          <a href="/blog/" class="menu-item group-hover:border-white">Blog</a>
+          <a href="{{locale.language_code}}" class="menu-item group-hover:border-white">Blog</a>
           {% elif page.locale.language_code == 'de' %}
-          <a href="/blog/" class="menu-item group-hover:border-white">Blog</a>
+          <a href="{{locale.language_code}}/blog/" class="menu-item group-hover:border-white">Blog</a>
           {% elif page.locale.language_code == 'tr' %}
-          <a href="/blog/" class="menu-item group-hover:border-white">Yazılar</a>
+          <a href="{{locale.language_code}}/blog/" class="menu-item group-hover:border-white">Yazılar</a>
           {% endif %}
           <!-- MEGA MENU CONTENT -->
           <div class="w-full px-12 py-12 rounded-2xl bg-neutral-0 dark:bg-neutral-dark-0 shadow-sm absolute top-full left-0 mt-8 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-4 transition-all duration-500">

@@ -113,37 +113,43 @@
           <div class="bg-primary-light-950 absolute top-0 left-0 right-0 h-28 w-full z-1"></div>
           <div class="w-full relative z-2 text-center flex flex-col justify-center content-center justify-items-center justify-self-center items-center">
             <div class="w-36 h-36 rounded-full border-4 border-neutral-0 dark:border-neutral-dark-300 overflow-hidden mb-8">
-              
-              <img src="/static/avatar/{{ featuredOwner}}.png" />
+              {% image blogauthors.image fill-150x150-c100 as custom_image %}
+              <img src="{{custom_image.url }}" />
               
             </div>
             <div class="flex-col justify-start items-center gap-4 inline-flex">
-              <a class="text-center text-neutral-950 dark:text-neutral-dark-950 text-4xl font-bold" href="author.html">{{ myName }}</a>
-              <div class="text-center text-neutral-700 text-base font-medium leading-normal">Goods and services. It involves entrepreneurship, management, marketing, finance, and many other aspects. Businesses aim to generate</div>
+              
+                {% get_language_info for page.locale.language_code as lang %}
+                <a class="text-center text-neutral-950 dark:text-neutral-dark-950 text-4xl font-bold" href="/{{lang.code}}{{blogauthors.url}}">{{ blogauthors.name }}</a>
+              
+                <div class="text-center text-neutral-700 text-base font-medium leading-normal">{{blogauthors.bio}}</div>
+                
             </div>
           </div>
         </div>
         <!--Post list 2-->
         <div class="col-span-2">
           <div class="flex flex-col gap-8">
-            {% for blog_post in  blogpages|slice:":4" %}
+            {% for blog_post in authorBlogPages %}
             <div class="w-full p-2.5 lg:pr-8 rounded-3xl border-2 border-neutral-300 dark:border-neutral-dark-300 flex-col justify-start items-start gap-2.5 inline-flex  hover-up">
               <div class="justify-start items-center gap-11 flex flex-col md:flex-row">
-                <a href="single.html" class="rounded-[18px] overflow-hidden max-h-44 md:max-w-72">
+                <a href="{{blogpost_url}}" class="rounded-[18px] overflow-hidden max-h-44 md:max-w-72">
                   {% image blog_post.image width-500 as custom_image %}
                   <img src="{{  custom_image.url }}" />
                 </a>
                 <div class="flex-col gap-4 inline-flex items-center md:items-start">
                   <div class="justify-start items-center gap-5 inline-flex">
-                    <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
-                      <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Business</div>
+                    <a href="" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
+                      
+                      <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{blogpages.category}}sss</div>
+
                     </a>
                     <div class="justify-start items-center gap-2 flex">
-                      <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="author.html">{{blog_post.owner}}</a> - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}</div>
+                      <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="{{blogauthors.url}}">{{blogauthors}}</a> - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}</div>
                     </div>
                   </div>
                   <h3 class="text-center md:text-start mb-4 md-mb-0">
-                    <a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="single.html">{{ blog_post.title}}</a>
+                    <a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="{{blog_post.url}}">{{ blog_post.title}}</a>
                   </h3>
                 </div>
               </div>

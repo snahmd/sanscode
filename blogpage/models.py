@@ -23,6 +23,11 @@ from standardpage.models import StandardPage
 
 
 
+
+
+
+
+
   
 class BlogAuthor(TranslatableMixin, models.Model):
 
@@ -49,10 +54,6 @@ class BlogAuthor(TranslatableMixin, models.Model):
     url = models.CharField(max_length=100, blank=True, null=True)
     # update url on slug change
 
-    def save(self, *args, **kwargs):
-        self.slug =  slugify(self.name)
-        self.url = f"/blog/author/{self.id}/{self.slug}/"
-        super(BlogAuthor, self).save(*args, **kwargs)
 
     
 
@@ -85,9 +86,10 @@ class BlogDetailAuthorPlacement(models.Model):
     def __str__(self):
         return self.author.name
     
-class BlogCategories(models.Model):
+class BlogCategories(TranslatableMixin, models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
     url = models.CharField(max_length=100, blank=True, null=True)
     category_image = models.ForeignKey(
         get_image_model(),
@@ -97,13 +99,12 @@ class BlogCategories(models.Model):
         related_name='+'
     )
 
-    def save(self, *args, **kwargs):
-        self.slug =  slugify(self.name)
-        self.url = f"/blog/category/{self.slug}/"
-        super(BlogCategories, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.name
+    
+    class Meta(TranslatableMixin.Meta):
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
 
 register_snippet(BlogCategories)
 
@@ -170,6 +171,7 @@ class BlogIndex(RoutablePageMixin, Page):
     
     @path('category/<str:category>/', name='category')
     def blog_posts_by_category(self, request, category=None):
+        print(".....adsl;adsl")
         posts = BlogDetail.objects.live().public().filter(categories_placement__category__slug__iexact=category).filter(locale__language_code=request.LANGUAGE_CODE)
         print(posts)
         return self.render(
@@ -200,8 +202,8 @@ class BlogIndex(RoutablePageMixin, Page):
     #         template= "blogpage/author_page.html"
     #     )
     @path('author/<str:author>/', name='author')
-
     def blog_posts_by_author(self, request, author=None):
+        print("lkadskldaskadskkladskasdkl")
         posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
      
         # get all objects
@@ -221,6 +223,7 @@ class BlogIndex(RoutablePageMixin, Page):
                 "author": author_instance
             },
             template= "blogpage/author_page.html"
+            
         )
 
 
@@ -228,6 +231,9 @@ class BlogIndex(RoutablePageMixin, Page):
     def get_context(self, request):
 
         context = super().get_context(request)
+        context["homepage"] = self.get_parent().specific
+
+
         context['blogpages'] = BlogDetail.objects.live().public().order_by('-first_published_at')
         # filter with locale.language_code
         context['blogpages'] = context['blogpages'].filter(locale__language_code=request.LANGUAGE_CODE)
@@ -264,6 +270,14 @@ class BlogIndex(RoutablePageMixin, Page):
         context['blogpages'] = blogpages 
         context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at').filter(locale__language_code=request.LANGUAGE_CODE)[:6]
         context["standardpages"] = StandardPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE)
+        context["blogmodel"] = BlogIndex.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE).first()
+        # use home.HomePage or parent_page
+        context["homemodel"] = self.get_parent().specific
+        # get all childrens
+        childs_count = context["homemodel"].get_children_count()
+       
+        print(context["homemodel"])
+        # context["contactmodel"] = ContactPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE).first()
         
         
 
@@ -273,7 +287,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey 
 from taggit.models import TaggedItemBase
 
-class BlogPageTag(TaggedItemBase):
+class BlogPageTag(TranslatableMixin, TaggedItemBase):
     content_object = ParentalKey(
         'blogpage.BlogDetail',
         related_name='tagged_items',
@@ -281,9 +295,12 @@ class BlogPageTag(TaggedItemBase):
     )
     url = models.CharField(max_length=100, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        self.url = f"/blog/tag/{self.tag.slug}/"
-        super(BlogPageTag, self).save(*args, **kwargs)
+    
+    class Meta(TranslatableMixin.Meta):
+        verbose_name = "Tag"
+        verbose_name_plural = "Tags" 
+
+register_snippet(BlogPageTag)      
 
 from wagtail.fields import StreamField
 from wagtail.blocks import TextBlock, BlockQuoteBlock, RichTextBlock
@@ -454,6 +471,19 @@ class BlogDetail(Page):
     # context ile template'e veri gönderme
     def get_context(self, request):
         context = super().get_context(request)
+        context["parent"] = self.get_parent().specific
+        context["parent_parent"] = self.get_parent().get_parent().specific
+        context["categories"] = [category.category for category in self.categories_placement.all()]
+        context["authors"] = [author.author for author in self.author_placement.all()]
+        context["tags"] = self.tags.all()
+        context["prevPost"] = BlogDetail.objects.live().public().filter(first_published_at__lt=self.first_published_at).order_by('-first_published_at').first()
+        context["nextPost"] = BlogDetail.objects.live().public().filter(first_published_at__gt=self.first_published_at).order_by('first_published_at').first()
+
+
+
+
+
+
         context['blogDetailPost'] = BlogDetail.objects.live().public().order_by('-first_published_at')
         # filter with locale.language_code
         context['blogDetailPost'] = context['blogDetailPost'].filter(locale__language_code=request.LANGUAGE_CODE)

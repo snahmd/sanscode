@@ -54,8 +54,14 @@ class HomePage(Page):
         context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at').filter(locale__language_code=request.LANGUAGE_CODE)[:6]
         context["standardpages"] = StandardPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE)
         context["contactpage"] = ContactPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE)
-        
-        
+        context["blogauthors"] = BlogAuthor.objects.all().filter(locale__language_code=request.LANGUAGE_CODE).first()
+
+
+        context["authorBlogPages"] = BlogDetail.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE).order_by('-first_published_at').filter(author_placement__author__slug="ahmed-san")[:4]
+
+        # print("context['blogpages'] ", context["blogpages"])
+       
+        print("context['blogauthors'] ", context["blogauthors"])
 
 
         return context
