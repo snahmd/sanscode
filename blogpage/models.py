@@ -229,12 +229,13 @@ class BlogIndex(RoutablePageMixin, Page):
 
     # context ile template'e veri gönderme
     def get_context(self, request):
-
+        
         context = super().get_context(request)
         context["homepage"] = self.get_parent().specific
 
 
         context['blogpages'] = BlogDetail.objects.live().public().order_by('-first_published_at')
+        
         # filter with locale.language_code
         context['blogpages'] = context['blogpages'].filter(locale__language_code=request.LANGUAGE_CODE)
         tag = request.GET.get('tag')

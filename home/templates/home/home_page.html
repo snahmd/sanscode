@@ -13,13 +13,13 @@
           <div class="swiper-slide hover-up">
             <div class="w-full h-52 relative rounded-3xl overflow-hidden">
               {% get_language_info for page.locale.language_code as lang %}
-              <a href="/{{lang.code}}/blog/?category={{category.slug}}">
+              <a href="/{{lang.code}}{{category.url}}">
                 {% image category.category_image width-500 as custom_image %}
                 <img class="left-0 top-0 absolute rounded-3xl" src="{{custom_image.url}}" />
               </a>
               <div class="px-[13px] py-[9px] left-[10px] top-[150px] absolute bg-neutral-0 dark:bg-neutral-dark-0 rounded-[26px] justify-center items-center gap-2.5 inline-flex">
                 {% get_language_info for page.locale.language_code as lang %}
-                <a href="/{{lang}}/blog/?category={{category.name}}" class="text-neutral-950 dark:text-neutral-dark-950 text-sm font-medium">{{category.name}}</a>
+                <a href="/{{lang.code}}{{category.url}}" class="text-neutral-950 dark:text-neutral-dark-950 text-sm font-medium">{{category.name}}</a>
                 <div class="w-[22px] h-[22px] relative">
                   <div class="w-7 h-7 left-[-3px] top-[-3px] absolute bg-primary-light-950 rounded-full"></div>
                   <div class="left-[3px] top-[5px] absolute text-center text-neutral-950 text-xs font-medium  leading-3">32</div>
@@ -41,11 +41,11 @@
                 <path d="M19.8829 0.671875H2.8827C2.35277 0.673442 1.84497 0.890991 1.47025 1.277C1.09552 1.663 0.884334 2.18609 0.882812 2.73198V15.6118C0.884334 16.1577 1.09552 16.6807 1.47025 17.0668C1.84497 17.4528 2.35277 17.6703 2.8827 17.6719H19.8829C20.4129 17.6703 20.9207 17.4528 21.2954 17.0668C21.6701 16.6807 21.8813 16.1577 21.8828 15.6118V2.73198C21.8813 2.18609 21.6701 1.663 21.2954 1.277C20.9207 0.890991 20.4129 0.673442 19.8829 0.671875ZM19.6326 5.04989L11.3828 10.7158L3.13182 5.04989V2.98979L11.3817 8.65566L19.6315 2.98979L19.6326 5.04989Z"></path>
               </svg>
               {% if page.locale.language_code == 'en' %}
-              <span class="text-neutral-0 font-medium text-2xl text-nowrap">Subscribe</span>
+              <span class="text-neutral-0 font-medium text-1xl text-nowrap">Subscribe</span>
               {% elif page.locale.language_code == 'de' %}
-              <span class="text-neutral-0 font-medium text-2xl text-nowrap">Abonnieren</span>
+              <span class="text-neutral-0 font-medium text-1xl text-nowrap">Abonnieren</span>
               {% elif page.locale.language_code == 'tr' %}
-              <span class="text-neutral-0 font-medium text-2xl text-nowrap">Abone Ol</span>
+              <span class="text-neutral-0 font-medium text-1xl text-nowrap">Abone Ol</span>
 
 
               {% endif %}
@@ -67,7 +67,13 @@
   <!--Home 1 Section 1 -->
   <section class="relative pt-20 py-10 lg:pt-12 lg:pb-24">
     <div class="container px-4">
+      {% if page.locale.language_code == "en"%}
       <h3 class="heading-2 text-center mb-16"><span class="font-light">See what we’ve</span><br> written lately</h3>
+      {% elif page.locale.language_code == "tr"%}
+      <h3 class="heading-2 text-center mb-16"><span class="font-light">Son yazılarımıza</span><br> göz atın</h3>
+      {% elif page.locale.language_code == "de" %}
+      <h3 class="heading-2 text-center mb-16"><span class="font-light">Sehen Sie, was wir</span><br> kürzlich geschrieben haben</h3>
+      {% endif %}
       <!--Post list 1-->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[65px]">
         {% for blog_post in  blogpages|slice:":6"%}
@@ -77,15 +83,22 @@
             <img src="{{  custom_image.url }}" class="h-[400px] w-full object-cover" />
           </a>
           <div class="flex-col justify-start items-start gap-3.5 flex">
+            {% for placement in blog_post.categories_placement.all|slice:":1" %}
             <div class="justify-start items-center gap-5 inline-flex">
-              <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
-                <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
+              {% get_language_info for page.locale.language_code as lang %}
+              <a href="/{{lang.code}}{{ placement.category.url }}" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
+                <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{placement.category.name}}</div>
               </a>
               <div class="justify-start items-center gap-2 flex">
-                <a href="#"><img class="w-9 h-9 rounded-3xl object-cover" src="/static/avatar/{{ blog_post.owner}}.png" /></a>
-                <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700 uppercase"><a href="#">{{ blog_post.owner}}</a> - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}</div>
+                {% for placement in blog_post.author_placement.all|slice:":1" %}
+                <a href="/{{lang.code}}{{placement.author.url}}">
+                  {% image placement.author.image width-100 as custom_image %}
+                  <img class="w-9 h-9 rounded-3xl object-cover" src="{{custom_image.url}}" /></a>
+                <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700 uppercase"><a href="/{{lang.code}}{{placement.author.url}}">{{ placement.author.name }}</a> - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}</div>
+                {% endfor %}
               </div>
             </div>
+            {% endfor %}
             <h3><a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="{{ blog_post.url }}">{{ blog_post.title}}</a></h3>
           </div>
         </div>
@@ -112,11 +125,13 @@
         <div class="relative w-full min-w-[310px] border-2 border-neutral-300 dark:border-neutral-dark-300 rounded-3xl bg-neutral-0 dark:bg-neutral-dark-0 py-12 px-4 overflow-hidden max-h-[414px]">
           <div class="bg-primary-light-950 absolute top-0 left-0 right-0 h-28 w-full z-1"></div>
           <div class="w-full relative z-2 text-center flex flex-col justify-center content-center justify-items-center justify-self-center items-center">
+           
             <div class="w-36 h-36 rounded-full border-4 border-neutral-0 dark:border-neutral-dark-300 overflow-hidden mb-8">
               {% image blogauthors.image fill-150x150-c100 as custom_image %}
               <img src="{{custom_image.url }}" />
               
             </div>
+            
             <div class="flex-col justify-start items-center gap-4 inline-flex">
               
                 {% get_language_info for page.locale.language_code as lang %}
@@ -138,16 +153,22 @@
                   <img src="{{  custom_image.url }}" />
                 </a>
                 <div class="flex-col gap-4 inline-flex items-center md:items-start">
+                  {% for placement in blog_post.categories_placement.all|slice:":1" %}
                   <div class="justify-start items-center gap-5 inline-flex">
-                    <a href="" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
+                    
+                    {% get_language_info for page.locale.language_code as lang %}
+                    <a href="/{{lang.code}}{{placement.category.url}}" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
                       
-                      <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{blogpages.category}}sss</div>
+                      <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{placement.category.name}}</div>
 
                     </a>
                     <div class="justify-start items-center gap-2 flex">
-                      <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="{{blogauthors.url}}">{{blogauthors}}</a> - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}</div>
+                      {% for placement in blog_post.author_placement.all|slice:":1" %}
+                      <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="/{{lang.code}}{{placement.author.url}}">{{ placement.author.name }}</a> - {{blog_post.latest_revision_created_at|date:"d.m.Y"}}</div>
+                      {% endfor %}
                     </div>
                   </div>
+                  {% endfor %}
                   <h3 class="text-center md:text-start mb-4 md-mb-0">
                     <a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="{{blog_post.url}}">{{ blog_post.title}}</a>
                   </h3>
@@ -161,6 +182,157 @@
       </div>
   </section>
 
+   <!--Home 1 Section 3 -->
+   <section class="relative py-10 lg:py-12">
+    <div class="container px-4">
+      <div class="bg-primary-light-950 dark:bg-primary-dark-950 px-4 py-8  lg:px-32 lg:py-20 rounded-3xl">
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
+        <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Featured </span> Posts</h3>
+        <div>
+          <button class="button-3 text-neutral-950 dark:text-neutral-dark-950">View More</button>
+        </div>
+      </div>
+      <div class="grid lg:grid-cols-3 gap-[30px]">
+        <!--col-->
+        <div class="relative flex flex-col gap-4 mb-8 lg:mb-0 justify-start">
+          <div class="flex-col justify-start items-start gap-5 inline-flex hover-up mb-4">
+            <a href="single.html" class="rounded-3xl overflow-hidden max-h-[370px]">
+              <img src="static/assets/imgs/pages/img-14.png" />
+            </a>
+            <div class="flex-col justify-start items-start gap-3.5 flex">
+              <div class="justify-start items-center gap-5 inline-flex">
+                <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
+                  <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
+                </a>
+                <div class="justify-start items-center gap-2 flex">
+                  <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="static/assets/imgs/avatar/avatar-01.png" /></a>
+                  <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="author.html">John Wick</a> - June 8, 2024</div>
+                </div>
+              </div>
+              <h3><a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="single.html">Globetrotting in Style: A Journey Through My Lens</a></h3>
+            </div>
+          </div>
+          <div class="w-full flex items-center gap-2.5  hover-up">
+            <div class="justify-start items-center gap-4 inline-flex">
+              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
+                <img src="static/assets/imgs/pages/thumb-01.png" />
+              </a>
+              <div class="flex-col justify-start items-start gap-4 inline-flex">
+                <h4>
+                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">The Importance of Mental Health in Modern Society</a>
+                </h4>
+                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex items-center gap-2.5  hover-up">
+            <div class="justify-start items-center gap-4 inline-flex">
+              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
+                <img src="static/assets/imgs/pages/thumb-02.png" />
+              </a>
+              <div class="flex-col justify-start items-start gap-4 inline-flex">
+                <h4>
+                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">The Evolution of Entertainment: From Analog to Digital</a>
+                </h4>
+                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative flex flex-col gap-4 mb-8 lg:mb-0">
+          <div class="flex-col justify-start items-start gap-5 inline-flex hover-up mb-4">
+            <a href="single.html" class="rounded-3xl overflow-hidden max-h-[370px]">
+              <img src="static/assets/imgs/pages/img-15.png" />
+            </a>
+            <div class="flex-col justify-start items-start gap-3.5 flex">
+              <div class="justify-start items-center gap-5 inline-flex">
+                <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
+                  <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
+                </a>
+                <div class="justify-start items-center gap-2 flex">
+                  <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="static/assets/imgs/avatar/avatar-01.png" /></a>
+                  <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="author.html">John Wick</a> - June 8, 2024</div>
+                </div>
+              </div>
+              <h3><a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="single.html">The Future of Robotics: Transforming Industries</a></h3>
+            </div>
+          </div>
+          <div class="w-full flex items-center gap-2.5  hover-up">
+            <div class="justify-start items-center gap-4 inline-flex">
+              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
+                <img src="static/assets/imgs/pages/thumb-03.png" />
+              </a>
+              <div class="flex-col justify-start items-start gap-4 inline-flex">
+                <h4>
+                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">Wildlife Conservation: Preserving Biodiversity</a>
+                </h4>
+                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex items-center gap-2.5  hover-up">
+            <div class="justify-start items-center gap-4 inline-flex">
+              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
+                <img src="static/assets/imgs/pages/thumb-04.png" />
+              </a>
+              <div class="flex-col justify-start items-start gap-4 inline-flex">
+                <h4>
+                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">Exploring Quantum Computing: A Paradigm Shift</a>
+                </h4>
+                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative flex flex-col gap-4 mb-8 lg:mb-0">
+          <div class="flex-col justify-start items-start gap-5 inline-flex hover-up mb-4">
+            <a href="single.html" class="rounded-3xl overflow-hidden max-h-[370px]">
+              <img src="static/assets/imgs/pages/img-16.png" />
+            </a>
+            <div class="flex-col justify-start items-start gap-3.5 flex">
+              <div class="justify-start items-center gap-5 inline-flex">
+                <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
+                  <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
+                </a>
+                <div class="justify-start items-center gap-2 flex">
+                  <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="static/assets/imgs/avatar/avatar-03.png" /></a>
+                  <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="author.html">John Wick</a> - June 8, 2024</div>
+                </div>
+              </div>
+              <h3><a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="single.html">Diversity in Cinema: Representations in Film</a></h3>
+            </div>
+          </div>
+          <div class="w-full flex items-center gap-2.5  hover-up">
+            <div class="justify-start items-center gap-4 inline-flex">
+              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
+                <img src="static/assets/imgs/pages/thumb-05.png" />
+              </a>
+              <div class="flex-col justify-start items-start gap-4 inline-flex">
+                <h4>
+                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">Emerging Trends in Renewable Energy: A Green Future</a>
+                </h4>
+                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex items-center gap-2.5  hover-up">
+            <div class="justify-start items-center gap-4 inline-flex">
+              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
+                <img src="static/assets/imgs/pages/thumb-06.png" />
+              </a>
+              <div class="flex-col justify-start items-start gap-4 inline-flex">
+                <h4>
+                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">The Art of Mindfulness: Cultivating Inner Peace</a>
+                </h4>
+                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
   
   <!--Home 1 Section 4 -->
   <section class="relative py-20 lg:py-24">

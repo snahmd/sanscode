@@ -48,6 +48,7 @@ class ContactPage(AbstractEmailForm):
         
         context['featured_posts_for_header'] = BlogDetail.objects.live().public().order_by('-first_published_at')[:6]
         context["standardpages"] = StandardPage.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE)
+        context["parent"] = self.get_parent().specific
         
        
         return context
