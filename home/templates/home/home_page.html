@@ -33,7 +33,8 @@
       </div>
       <div class="flex justify-between items-center gap-8 lg:gap-32 mt-12 flex-col lg:flex-row">
         <p class="text-neutral-950 dark:text-neutral-dark-950 text-base font-medium lg:w-2/4">{{description}}</p>
-        <form class="max-w-full overflow-hidden" action="">
+        <form class="max-w-full overflow-hidden" action="/api/subscribe/" method="post">
+          {% csrf_token %}
           <div class="flex flex-col md:flex-row mb-4 md:bg-neutral-0 dark:bg-neutral-dark-200 rounded-full p-1">
             <input class="focus:outline-none transition duration-200 py-4 bg-neutral-0 dark:bg-neutral-dark-200 rounded-full pl-6 w-full mb-2 md:mb-0" type="text" placeholder="Your email address">
             <button class="w-full sm:w-auto h-14 py-4 px-6 rounded-full bg-neutral-950 transition duration-200 flex items-center justify-center gap-2" type="submit">
@@ -111,11 +112,11 @@
     <div class="container px-4">
       <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
         {% if page.locale.language_code == 'en' %}
-        <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Featured </span>Posts</h3>
+        <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Featured </span>Author</h3>
         {% elif page.locale.language_code == 'de' %}
-        <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Vorgestellte </span>Beiträge</h3>
-        {% elif page.locale.language_code == 'tr' %}
-        <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Öne Çıkan </span>Yazılar</h3>
+        <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Vorgestellter </span>Autor</h3>
+        {% elif page.locale.language_code == 'tr' %}  
+        <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Öne Çıkan </span>Yazar</h3>
         {% endif %}
         
       </div>
@@ -182,177 +183,91 @@
       </div>
   </section>
 
-   <!--Home 1 Section 3 -->
-   <section class="relative py-10 lg:py-12">
-    <div class="container px-4">
-      <div class="bg-primary-light-950 dark:bg-primary-dark-950 px-4 py-8  lg:px-32 lg:py-20 rounded-3xl">
-      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
-        <h3 class="heading-2 text-left mb-4 lg:mb-0"><span class="font-light">Featured </span> Posts</h3>
-        <div>
-          <button class="button-3 text-neutral-950 dark:text-neutral-dark-950">View More</button>
-        </div>
-      </div>
-      <div class="grid lg:grid-cols-3 gap-[30px]">
-        <!--col-->
-        <div class="relative flex flex-col gap-4 mb-8 lg:mb-0 justify-start">
-          <div class="flex-col justify-start items-start gap-5 inline-flex hover-up mb-4">
-            <a href="single.html" class="rounded-3xl overflow-hidden max-h-[370px]">
-              <img src="static/assets/imgs/pages/img-14.png" />
-            </a>
-            <div class="flex-col justify-start items-start gap-3.5 flex">
-              <div class="justify-start items-center gap-5 inline-flex">
-                <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
-                  <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
+    <!-- Home 3 Section 2 -->
+    <section class="relative py-12 md:py-12 lg:py-12">
+      <div class="container px-4">
+        <div class="bg-primary-light-950 dark:bg-primary-dark-950 px-4 py-8  lg:px-32 lg:py-20 rounded-3xl">
+          <div class="flex flex-col justify-start mb-16 items-start lg:flex-row lg:justify-between lg:items-end">
+            {% if page.locale.language_code == "en"%}
+            <h3 class="heading-3 text-left mb-8 lg:mb-0 leading-none"><span class="font-light">Featured </span> Posts</h3>
+            {% elif page.locale.language_code == "tr"%}
+            <h3 class="heading-3 text-left mb-8 lg:mb-0 leading-none"><span class="font-light">Öne Çıkan </span> Yazılar</h3>
+            {% elif page.locale.language_code == "de" %}
+            <h3 class="heading-3 text-left mb-8 lg:mb-0 leading-none"><span class="font-light">Vorgestellte </span> Beiträge</h3>
+            {% endif %}
+            
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+            {% for featured_post in blog_pages|slice:":3"%}
+            <div class="w-full rounded-3xl border-2 border-neutral-300 dark:border-neutral-dark-300 flex-col justify-start items-start inline-flex  hover-up">
+              <div class="justify-start items-center gap-4 flex flex-col">
+                <a href="{{ featured_post.url}}" class="rounded-[18px] overflow-hidden max-h-[180px]">
+                  {% image featured_post.image width-500 as custom_image %}
+                  
+                  <img src="{{custom_image.url}}" />
                 </a>
-                <div class="justify-start items-center gap-2 flex">
-                  <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="static/assets/imgs/avatar/avatar-01.png" /></a>
-                  <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="author.html">John Wick</a> - June 8, 2024</div>
+                <div class="p-4 flex-col gap-4 inline-flex items-start md:items-start w-full">
+                  <div class="justify-start items-center gap-2 inline-flex">
+                    {% for placement in featured_post.categories_placement.all|slice:":3" %}
+                    <a href="/{{page.locale.language_code}}{{placement.category.url}}" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
+                      
+                      <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{ placement.category.name}}</div>
+                    </a>
+                    {% endfor %}
+                    <div class="justify-start items-center gap-2 flex">
+                      <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">{{featured_post.latest_revision_created_at|date:"d.m.Y"}}</div>
+                    </div>
+                  </div>
+                  <h3 class="text-center md:text-start mb-4 md-mb-0">
+                    <a class="text-neutral-950 dark:text-neutral-dark-950 text-lg font-bold leading-tight item-link" href="{{ featured_post.url}}">{{ featured_post.title}}</a>
+                  </h3>
                 </div>
               </div>
-              <h3><a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="single.html">Globetrotting in Style: A Journey Through My Lens</a></h3>
             </div>
-          </div>
-          <div class="w-full flex items-center gap-2.5  hover-up">
-            <div class="justify-start items-center gap-4 inline-flex">
-              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
-                <img src="static/assets/imgs/pages/thumb-01.png" />
-              </a>
-              <div class="flex-col justify-start items-start gap-4 inline-flex">
-                <h4>
-                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">The Importance of Mental Health in Modern Society</a>
-                </h4>
-                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
-              </div>
-            </div>
-          </div>
-          <div class="w-full flex items-center gap-2.5  hover-up">
-            <div class="justify-start items-center gap-4 inline-flex">
-              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
-                <img src="static/assets/imgs/pages/thumb-02.png" />
-              </a>
-              <div class="flex-col justify-start items-start gap-4 inline-flex">
-                <h4>
-                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">The Evolution of Entertainment: From Analog to Digital</a>
-                </h4>
-                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="relative flex flex-col gap-4 mb-8 lg:mb-0">
-          <div class="flex-col justify-start items-start gap-5 inline-flex hover-up mb-4">
-            <a href="single.html" class="rounded-3xl overflow-hidden max-h-[370px]">
-              <img src="static/assets/imgs/pages/img-15.png" />
-            </a>
-            <div class="flex-col justify-start items-start gap-3.5 flex">
-              <div class="justify-start items-center gap-5 inline-flex">
-                <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
-                  <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
-                </a>
-                <div class="justify-start items-center gap-2 flex">
-                  <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="static/assets/imgs/avatar/avatar-01.png" /></a>
-                  <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="author.html">John Wick</a> - June 8, 2024</div>
-                </div>
-              </div>
-              <h3><a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="single.html">The Future of Robotics: Transforming Industries</a></h3>
-            </div>
-          </div>
-          <div class="w-full flex items-center gap-2.5  hover-up">
-            <div class="justify-start items-center gap-4 inline-flex">
-              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
-                <img src="static/assets/imgs/pages/thumb-03.png" />
-              </a>
-              <div class="flex-col justify-start items-start gap-4 inline-flex">
-                <h4>
-                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">Wildlife Conservation: Preserving Biodiversity</a>
-                </h4>
-                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
-              </div>
-            </div>
-          </div>
-          <div class="w-full flex items-center gap-2.5  hover-up">
-            <div class="justify-start items-center gap-4 inline-flex">
-              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
-                <img src="static/assets/imgs/pages/thumb-04.png" />
-              </a>
-              <div class="flex-col justify-start items-start gap-4 inline-flex">
-                <h4>
-                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">Exploring Quantum Computing: A Paradigm Shift</a>
-                </h4>
-                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="relative flex flex-col gap-4 mb-8 lg:mb-0">
-          <div class="flex-col justify-start items-start gap-5 inline-flex hover-up mb-4">
-            <a href="single.html" class="rounded-3xl overflow-hidden max-h-[370px]">
-              <img src="static/assets/imgs/pages/img-16.png" />
-            </a>
-            <div class="flex-col justify-start items-start gap-3.5 flex">
-              <div class="justify-start items-center gap-5 inline-flex">
-                <a href="category.html" class="px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 justify-center items-center gap-2.5 flex">
-                  <div class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">Trending</div>
-                </a>
-                <div class="justify-start items-center gap-2 flex">
-                  <a href="author.html"><img class="w-9 h-9 rounded-3xl" src="static/assets/imgs/avatar/avatar-03.png" /></a>
-                  <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="author.html">John Wick</a> - June 8, 2024</div>
-                </div>
-              </div>
-              <h3><a class="text-neutral-950 dark:text-neutral-dark-950 text-2xl font-bold leading-snug item-link" href="single.html">Diversity in Cinema: Representations in Film</a></h3>
-            </div>
-          </div>
-          <div class="w-full flex items-center gap-2.5  hover-up">
-            <div class="justify-start items-center gap-4 inline-flex">
-              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
-                <img src="static/assets/imgs/pages/thumb-05.png" />
-              </a>
-              <div class="flex-col justify-start items-start gap-4 inline-flex">
-                <h4>
-                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">Emerging Trends in Renewable Energy: A Green Future</a>
-                </h4>
-                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
-              </div>
-            </div>
-          </div>
-          <div class="w-full flex items-center gap-2.5  hover-up">
-            <div class="justify-start items-center gap-4 inline-flex">
-              <a href="single.html" class="rounded-2xl overflow-hidden max-h-[90px] max-w-[106px]">
-                <img src="static/assets/imgs/pages/thumb-06.png" />
-              </a>
-              <div class="flex-col justify-start items-start gap-4 inline-flex">
-                <h4>
-                  <a class="text-neutral-950 dark:text-neutral-dark-950 text-base font-bold item-link" href="single.html">The Art of Mindfulness: Cultivating Inner Peace</a>
-                </h4>
-                <p class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">2 mins read - June 8, 2024</p>
-              </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
       </div>
-      </div>
-    </div>
-  </section>
+    </section>
   
   <!--Home 1 Section 4 -->
   <section class="relative py-20 lg:py-24">
     <div class="container px-4">
       <div class="grid flex-col justify-center justify-items-center align-center mb-16">
+        {% if page.locale.language_code == 'en' %}
         <h3 class="heading-3 text-center mb-12 md:w-2/3 leading-tight"><span class="font-light">Subscribe to my weekly newsletter for priority</span> news, reviews and updates</h3>
+        {% elif page.locale.language_code == 'de' %}
+        <h3 class="heading-3 text-center mb-12 md:w-2/3 leading-tight"><span class="font-light">Abonnieren Sie meinen wöchentlichen Newsletter für Priorität <span> Nachrichten, Bewertungen und Updates</h3>
+        {% elif page.locale.language_code == 'tr' %}
+        <h3 class="heading-3 text-center mb-12 md:w-2/3 leading-tight"><span class="font-light">Öncelikli haberler, incelemeler ve güncellemeler için</span> haftalık bültenime abone olun</h3>
+        {% endif %}
         <div>
-          <form class="max-w-full overflow-hidden" action="">
+          <form class="max-w-full overflow-hidden" action="/api/subscribe/" method="post">
+            {% csrf_token %}
             <div class="flex flex-col md:flex-row mb-4 md:bg-neutral-0 dark:bg-neutral-dark-200 rounded-full p-1 md:border border-neutral-300 dark:border-neutral-dark-300">
               <input class="focus:outline-none transition duration-200 py-4 bg-neutral-0 dark:bg-neutral-dark-200 rounded-full pl-6 w-full mb-2 md:mb-0 md:border-0 border border-neutral-300 dark:border-neutral-dark-300 " type="text" placeholder="Your email address">
               <button class="w-full sm:w-auto h-14 py-4 px-6 rounded-full bg-neutral-950 transition duration-200 flex items-center justify-center gap-2" type="submit">
                 <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 fill-primary-light-950" preserveAspectRatio="none">
                   <path d="M19.8829 0.671875H2.8827C2.35277 0.673442 1.84497 0.890991 1.47025 1.277C1.09552 1.663 0.884334 2.18609 0.882812 2.73198V15.6118C0.884334 16.1577 1.09552 16.6807 1.47025 17.0668C1.84497 17.4528 2.35277 17.6703 2.8827 17.6719H19.8829C20.4129 17.6703 20.9207 17.4528 21.2954 17.0668C21.6701 16.6807 21.8813 16.1577 21.8828 15.6118V2.73198C21.8813 2.18609 21.6701 1.663 21.2954 1.277C20.9207 0.890991 20.4129 0.673442 19.8829 0.671875ZM19.6326 5.04989L11.3828 10.7158L3.13182 5.04989V2.98979L11.3817 8.65566L19.6315 2.98979L19.6326 5.04989Z"></path>
                 </svg>
-                <span class="text-neutral-0 font-medium text-2xl">Subscribe</span>
+                {% if page.locale.language_code == 'en' %}
+                <span class="text-neutral-0 font-medium text-2xl text-nowrap">Subscribe</span>
+                {% elif page.locale.language_code == 'de' %}
+                <span class="text-neutral-0 font-medium text-2xl text-nowrap">Abonnieren</span>
+                {% elif page.locale.language_code == 'tr' %}
+                <span class="text-neutral-0 font-medium text-2xl text-nowrap">Abone Ol</span>
+                {% endif %}
               </button>
             </div>
             <div class="flex items-center justify-center mt-8">
               <input id="checkbox" type="checkbox" class="w-4 h-4 accent-primary-light-950  bg-primary-light-950 text-neutral-0  rounded cursor-pointer">
+              {% if page.locale.language_code == 'en' %}
               <label for="checkbox" class="text-neutral-700 text-sm ml-2 cursor-pointer">I agree to the <a href="#" class="text-neutral-950 dark:text-neutral-dark-950">terms & conditions</a></label>
+              {% elif page.locale.language_code == 'de' %}
+              <label for="checkbox" class="text-neutral-700 text-sm ml-2 cursor-pointer">Ich stimme den <a href="#" class="text-neutral-950 dark:text-neutral-dark-950">Geschäftsbedingungen</a> zu</label>
+              {% elif page.locale.language_code == 'tr' %}
+              <label for="checkbox" class="text-neutral-700 text-sm ml-2 cursor-pointer"><a href="#" class="text-neutral-950 dark:text-neutral-dark-950">Şartları ve Koşulları </a> kabul ediyorum</label>
+              {% endif %}
             </div>
           </form>
         </div>

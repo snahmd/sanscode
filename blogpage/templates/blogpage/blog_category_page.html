@@ -44,8 +44,8 @@
                   <div class="justify-start items-center gap-2 flex">
                     {% for placement in post.author_placement.all|slice:":1" %}
                       <a href="{{placement.author.url}}">
-                        {% image placement.author.image width-36 as custom_image %}
-                        <img class="w-9 h-9 rounded-3xl" src="{{custom_image.url}}" />
+                        {% image placement.author.image width-100 as custom_image %}
+                        <img class="w-9 h-9 rounded-3xl object-cover" src="{{custom_image.url}}" />
                       </a>
                       <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700"><a href="{{placement.author.url}}">{{placement.author}}</a> - {{post.latest_revision_created_at|date:"d.m.Y"}}</div>
                     {% endfor %}

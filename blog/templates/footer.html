@@ -39,32 +39,41 @@
         <div class="grid grid-cols-2 lg:grid-cols-2 md:grid-cols-2">
           
           <div class="mb-4">
+            {% if page.locale.language_code == 'en' %}
             <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Pages</h6>
+            {% elif page.locale.language_code == 'de' %}
+            <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Seiten</h6>
+            {% elif page.locale.language_code == 'tr' %}
+            <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Sayfalar</h6>
+            {% endif %}
             <ul>
               <li class="footer-menu">
-                <a href="/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Home</a>
+                <a href="{{home_page.url}}" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">{{home_page}}</a>
               </li>
              
-              {% for cpage in contactpage %}
+              
               <li class="footer-menu">
-                <a href="{{lang}}/contact/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">{{cpage.title}}</a>
+                <a href="{{contact_page.url}}" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">{{contact_page}}</a>
               </li>
-              {% endfor %}
+             
               <li class="footer-menu">
-                {% if page.locale.language_code == 'en' %}
-                <a href="/en/blog/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Blog</a>
-                {% elif page.locale.language_code == 'de' %}
-                <a href="/de/blog/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Blog</a>
-                {% elif page.locale.language_code == 'tr' %}
-                <a href="/tr/yazilar/" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">Yazılar</a>
-                {% endif %}
+                
+                <a href="{{blog_index_page}}" class="text-base font-regular text-neutral-950 dark:text-neutral-dark-950">{{blog_index_page}}</a>
+                
 
               </li>
             </ul>
           </div>
           {% if standardpages %}
           <div class="mb-4">
+            {% if page.locale.language_code == 'en' %}
             <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Legal</h6>
+            {% elif page.locale.language_code == 'de' %}
+            <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Impressum</h6>
+            {% elif page.locale.language_code == 'tr' %}
+            <h6 class="text-base font-bold text-neutral-700 dark:text-neutral-dark-700 mb-2">Yasal</h6>
+            {% endif %}
+            
             <!-- add from satdardpage model title context -->
             
             <ul>

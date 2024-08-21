@@ -28,7 +28,7 @@
       <div class="flex flex-col gap-4 items-center justify-center text-center">
         <div class="justify-center items-center gap-4 flex flex-col md:flex-row">
           {% for category in categories %}
-            <a href="{{ category.url }}" class="inline-flex  px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300 justify-center items-center gap-2.5">
+            <a href="/{{page.locale.language_code}}{{ category.url }}" class="inline-flex  px-3 py-[8px] bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-300 dark:border-neutral-dark-300 justify-center items-center gap-2.5">
               <span class="text-neutral-900 dark:text-neutral-dark-950 text-sm font-medium leading-none">{{ category.name }}</span>
             </a>
           {% endfor %}
@@ -36,12 +36,12 @@
             {% for iter in authors %}
               
               {% get_language_info for page.locale.language_code as lang %}
-              <a href="{{iter.url}}">
+              <a href="/{{page.locale.language_code}}{{iter.url}}">
                 {% image iter.image width-500 as custom_image %}
                 <img class="w-9 h-9 rounded-3xl object-cover" src="{{custom_image.url}}" />
               </a>
               <div class="text-neutral-700 text-sm font-medium leading-none dark:text-neutral-dark-700">
-                <a href="{{iter.url}}">{{iter.name}} - </a> </div>
+                <a href="/{{page.locale.language_code}}{{iter.url}}">{{iter.name}} - </a> </div>
             {% endfor %} 
             {{page.latest_revision_created_at|date:"d.m.Y"}}
           </div>
@@ -210,7 +210,7 @@
               Subscribe Us
             </h4>
             <p class="font-medium text-neutral-700 dark:text-neutral-dark-700 mb-4 lg:mb-8 max-w-[350px]">
-              Get the latest creative news from IDEKO magazine
+              {{parent_parent.description}}
             </p>
             <form class="max-w-full overflow-hidden" action="/api/subscribe/" method="post">
               {% csrf_token %}
@@ -222,7 +222,13 @@
                   </svg>
                 </button>
               </div>
+              {% if page.locale.language_code == 'en' %}
               <p class="text-neutral-700 text-sm pl-4">* Unsubscribe anytime</p>
+              {% elif page.locale.language_code == 'tr' %}
+              <p class="text-neutral-700 text-sm pl-4">* Her zaman abonelikten çıkabilirsiniz</p>
+              {% elif page.locale.language_code == 'de' %}
+              <p class="text-neutral-700 text-sm pl-4">* Jederzeit abbestellen</p>
+              {% endif %}
             </form>
           </div>
           <!-- Featured box -->
@@ -235,7 +241,7 @@
             <h4 class="text-2xl text-neutral-950 font-bold dark:text-neutral-dark-950">Vorgestellte <span class="font-light">Beiträge</span></h4>
             {% endif %}
             <div class="flex flex-col gap-6">
-              {% for featured_post in featured_pages|slice:":4"%}
+              {% for featured_post in blog_pages|slice:":4"%}
               <div class="w-full flex items-center gap-2.5  hover-up">
                 <div class="justify-start items-center gap-4 inline-flex">
                   <a href="{{ featured_post.url}}" class="rounded-2xl overflow-hidden w-full h-full max-h-[90px] max-w-[106px]">
