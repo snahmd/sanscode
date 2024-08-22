@@ -42,12 +42,21 @@ class HomePage(Page):
         context = super().get_context(request)
         context['blogpages'] = BlogDetail.objects.live().public().filter(locale__language_code=request.LANGUAGE_CODE).order_by('-first_published_at')
         context['categories'] = BlogCategories.objects.all().filter(locale__language_code=request.LANGUAGE_CODE)
+        # find the count of blogs in categories
+        context["category_blog_counts"] = []
+        for val in context['categories']:
+            context["category_blog_counts"].append(BlogDetail.objects.live().public().filter(categories_placement__category=val, locale__language_code=request.LANGUAGE_CODE).count())
+
+        context['categories'] = BlogCategories.objects.all().annotate(blog_count=models.Count('blogs')).filter(locale__language_code=request.LANGUAGE_CODE)
+
        
         context["featuredOwner"] = "admin"
         context["myName"] = "_sanscode"
         context["subtitle"] = self.subtitle
         context["subtitle_light"] = self.subtitle_light
         context["description"] = self.description
+
+
        
         # # send in homepage img to template
         # context['homeImage'] = self.image

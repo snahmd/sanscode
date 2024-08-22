@@ -34,7 +34,7 @@ class BlogAuthor(TranslatableMixin, models.Model):
     
     name = models.CharField(max_length=100)
     website = models.EmailField(max_length=100)
-    bio = models.TextField(max_length=300, default="Bio")
+    bio = models.TextField(max_length=200, default="Bio")
     image = models.ForeignKey(
         get_image_model(),
         null=True,
@@ -90,7 +90,7 @@ class BlogCategories(TranslatableMixin, models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, blank=True, null=True)
     url = models.CharField(max_length=100, blank=True, null=True)
-    url = models.CharField(max_length=100, blank=True, null=True)
+   
     category_image = models.ForeignKey(
         get_image_model(),
         null=True,
@@ -115,7 +115,7 @@ class BlogDetailCategoriesPlacement(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name='blogs',
     )
     
     panels = [

@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "wagtailcodeblock",
     'rest_framework',
+    "crispy_forms",                     # new
+    "crispy_tailwind", 
 ]
 
 MIDDLEWARE = [
@@ -137,7 +139,11 @@ USE_L10N = True
 USE_TZ = True
 
 WAGTAIL_I18N_ENABLED = True
-WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True
+
+# i want to sync the page tree  exceot the blog detail page
+
+WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True and not "blogpage.BlogDetail"
+
 WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("en", "English"),
     ("tr", "Turkish"),
@@ -210,3 +216,8 @@ WAGTAILIMAGES_EXTENSIONS = [ "jpg", "jpeg", "gif", "png", "webp", "svg" ]
 WAGTAILIMAGES_GIF_QUALITY = 50
 
 WAGTAILIMAGES_MAX_UPLOAD_SIZE = 20 * 1024 * 1024 
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"

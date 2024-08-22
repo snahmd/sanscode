@@ -2,6 +2,7 @@
 {% load wagtailcore_tags static %}
 {% load i18n %}
 {% block content %}
+{% load crispy_forms_tags %}
 
 <div class="header-bg absolute top-0 left-0 right-0 -z-50 w-full h-[1100px] bg-gradient-to-b from-primary-light-950/15 to-transparent max-h-[1100px] overflow-hidden"></div>
   <section class="py-12">
@@ -44,23 +45,15 @@
           {% elif page.locale.language_code == 'tr' %}
           <span class="font-light">İletişime</span> Geçin</h4>
           {% endif %}
+          
         <form action="{% pageurl page %}" method="POST">
             {% csrf_token %}
             
-          <div class="grid md:grid-cols-3 gap-4 mb-4 md:mb-0 [&>input]:input-default">
-            {% for field in form %}
-                {% if field.name != 'your_message' %}
-                {{ field.field_type }}
-               <input type="{{field.field.widget.input_type}}" name="{{ field.name }}" placeholder="{{field.help_text}}" class="input-default">
-                {% endif %}
-
-               
-            {% endfor %}
-            <!-- <input type="email" placeholder="Email" class="input-default">
-            <input type="text" placeholder="Subject" class="input-default"> -->
-          </div>
-          <textarea name="your_message" placeholder="Message" class="textarea-default"></textarea>
-          <div class="flex items-center mb-8">
+       
+           {{form|crispy}}
+          
+          <!-- <textarea name="your_message" placeholder="Message" class="textarea-default"></textarea>-->
+          <div class="flex items-center mb-8"> 
             
           </div>
           <button type="submit" class="group btn bg-primary-light-950 dark:bg-primary-dark-950 rounded-full px-8 py-4 text-xl text-neutral-950 dark:text-neutral-dark-950 flex gap-2 items-center">
@@ -83,6 +76,8 @@
             </svg>
           </button>
         </form>
+        
+        
       </div>
     </div>
   </section>
