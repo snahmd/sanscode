@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     "crispy_forms",                     # new
     "crispy_tailwind", 
+    "wagtail.contrib.settings",
 ]
 
 MIDDLEWARE = [
@@ -87,6 +88,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "wagtail.contrib.settings.context_processors.settings",
                 "site_settings.context_processors.featuredPages",
             ],
         },
