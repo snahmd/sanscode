@@ -5,9 +5,9 @@
     <div class="container flex justify-between items-center relative px-4">
       <h1>
         <a href="/">
-          
-          <img src="/static/avatar/logo.png" alt="logo" class="flex-shrink-0 relative dark:hidden w-[100px]">
-          <img src="/static/avatar/logo.png" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block w-[100px]">
+          {% image settings.site_settings.GenericFooterLogoSettings.footer_logo  max-120x100 as logo_img %}
+          <img src="{{logo_img.url}}" alt="logo" class="flex-shrink-0 relative dark:hidden w-[100px]">
+          <img src="{{logo_img.url}}" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block w-[100px]">
         </a>
       </h1>
       <ul class="xl:flex hidden">

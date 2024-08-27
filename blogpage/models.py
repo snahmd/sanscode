@@ -370,6 +370,19 @@ class BlogDetail(Page):
         related_name='+'
     )
 
+    # ads = StreamField(
+    #     [
+    #         ('sponsored_ads', blocks.StructBlock(
+    #                     [
+    #                         ('ads_text', TextBlock(required=False)),
+    #                         ('ads_image', ImageChooserBlock(required=False, null=True, blank=True, on_delete=models.SET_NULL)),
+    #                     ],
+    #                     icon='openquote',
+    #                     template='blocks/sponsored_ads.html',
+    #         )),
+    #     ]
+    # )         
+
     body = StreamField(
         [
             # ('text', TextBlock()),
