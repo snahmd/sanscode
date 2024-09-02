@@ -159,11 +159,23 @@ class BlogIndex(RoutablePageMixin, Page):
     def blog_posts_by_tag(self, request, tag=None):
 
         posts = BlogDetail.objects.live().public().filter(tags__name__iexact=tag).filter(locale__language_code=request.LANGUAGE_CODE)
+        paginator = Paginator(posts, 3)
+        page = request.GET.get('p')
+        try:
+            blogpages = paginator.page(page)
+            currentPage = int(page)
+        except PageNotAnInteger:
+            blogpages = paginator.page(1)
+            currentPage = 1
+        except EmptyPage:
+            blogpages = paginator.page(paginator.num_pages)
+            currentPage = paginator.num_pages
         print(posts)
         return self.render(
             request, 
             context_overrides={
-                'posts': posts,
+                'posts': blogpages,
+                'currentPage': currentPage,
                 "tag": tag
             },
             template= "blogpage/blog_tag_page.html"
@@ -173,12 +185,23 @@ class BlogIndex(RoutablePageMixin, Page):
     def blog_posts_by_category(self, request, category=None):
         print(".....adsl;adsl")
         posts = BlogDetail.objects.live().public().filter(categories_placement__category__slug__iexact=category).filter(locale__language_code=request.LANGUAGE_CODE)
-        print(posts)
+        paginator = Paginator(posts, 4)
+        page = request.GET.get('p')
+        try:
+            blogpages = paginator.page(page)
+            currentPage = int(page)
+        except PageNotAnInteger:
+            blogpages = paginator.page(1)
+            currentPage = 1
+        except EmptyPage:
+            blogpages = paginator.page(paginator.num_pages)
+            currentPage = paginator.num_pages
         return self.render(
             request, 
             context_overrides={
-                'posts': posts,
-                "category": category
+                'posts': blogpages,
+                "category": category,
+                'currentPage': currentPage,
             },
             template= "blogpage/blog_category_page.html"
         )
@@ -205,7 +228,18 @@ class BlogIndex(RoutablePageMixin, Page):
     def blog_posts_by_author(self, request, author=None):
         print("lkadskldaskadskkladskasdkl")
         posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
-     
+        paginator = Paginator(posts, 9)
+        page = request.GET.get('p')
+        try:
+            blogpages = paginator.page(page)
+            currentPage = int(page)
+        except PageNotAnInteger:
+            blogpages = paginator.page(1)
+            currentPage = 1
+        except EmptyPage:
+            blogpages = paginator.page(paginator.num_pages)
+            currentPage = paginator.num_pages
+        print(posts)
         # get all objects
         author_instance = BlogAuthor.objects.all().filter(slug__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE).first()
         print("....")
@@ -220,7 +254,8 @@ class BlogIndex(RoutablePageMixin, Page):
             request, 
             context_overrides={
                 'posts': posts,
-                "author": author_instance
+                "author": author_instance,
+                'currentPage': currentPage,
             },
             template= "blogpage/author_page.html"
             

@@ -144,9 +144,9 @@ WAGTAIL_I18N_ENABLED = True
 
 # i want to sync the page tree  exceot the blog detail page
 #bu sayfalar yapildiktan sonra isleme al - tüm her yere uyguluyor
-# WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True and not "blogpage.BlogDetail"
+WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = False
 
-WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True
+# WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True
 
 WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("en", "English"),
