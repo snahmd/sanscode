@@ -108,7 +108,7 @@
             <img src="/static/imgs/template/icon-search.svg" alt="dark/light" class="flex-shrink-0 relative dark:hidden">
             <img src="/static/imgs/template/icon-search-white.svg" alt="dark/light" class="flex-shrink-0 relative hidden dark:inline-block">
           </div>
-          <div class="search-box-content absolute top-full right-0 p-10  mr-[-50px] max-w-[360px] md:max-w-none bg-neutral-0 dark:bg-neutral-dark-200 rounded-2xl shadow-sm hidden invisible mt-8 transition-all duration-300">
+          <!-- <div class="search-box-content absolute top-full right-0 p-10  mr-[-50px] max-w-[360px] md:max-w-none bg-neutral-0 dark:bg-neutral-dark-200 rounded-2xl shadow-sm hidden invisible mt-8 transition-all duration-300">
             <h1 class="text-5xl font-bold text-neutral-950 dark:text-neutral-0 mb-4">Search <span class="font-light">Content</span></h1>
             <div class="relative mb-8">
               <form action="">
@@ -140,7 +140,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         
@@ -163,51 +163,21 @@
             <div class="flex flex-col h-full">
               <h1 class="pt-2 pb-6">
                 <a href="/">
-                  
-                  <img src="/static/avatar/logo.png" alt="logo" class="flex-shrink-0 relative dark:hidden w-[100px]">
-                  <img src="/static/avatar/logo.png" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block w-[100px]">
+                  {% image settings.site_settings.GenericFooterLogoSettings.footer_logo  max-120x100 as logo_img %}
+                  <img src="{{logo_img.url}}" alt="logo" class="flex-shrink-0 relative dark:hidden w-[100px]">
+                  <img src="{{logo_img.url}}" alt="logo" class="flex-shrink-0 relative hidden dark:inline-block w-[100px]">
                 </a>
               </h1>
               <ul class="py-6 mb-6 border-y border-neutral-300 dark:border-neutral-dark-300">
-                <li class="has-children">
-                  <a class="menu-mobile-item" href="/">Home</a>
-                  <ul class="sub-menu">
-                    <li><a class="menu-mobile-sub-item" href="index.html">Home page 01</a></li>
-                    <li><a class="menu-mobile-sub-item" href="index-2.html">Home page 02</a></li>
-                    <li><a class="menu-mobile-sub-item" href="index-3.html">Home page 03</a></li>
-                  </ul>
-                </li>
-                <li class="has-children">
-                  <a class="menu-mobile-item" href="#">Blog</a>
-                  <ul class="sub-menu">
-                    <li><a href="category.html" class="menu-mobile-sub-item">Category 01</a></li>
-                    <li><a href="category-2.html" class="menu-mobile-sub-item">Category 02</a></li>
-                    <li><a href="category-3.html" class="menu-mobile-sub-item">Category 03</a></li>
-                    <li><a href="category-4.html" class="menu-mobile-sub-item">Category 04</a></li>
-                    <li><a href="single.html" class="menu-mobile-sub-item">Single 01</a></li>
-                    <li><a href="single-2.html" class="menu-mobile-sub-item">Single 02</a></li>
-                  </ul>
-                </li>
-                <li class="has-children">
-                  <a class="menu-mobile-item" href="#">Pages</a>
-                  <ul class="sub-menu">
-                    <li><a href="page-about.html" class="menu-mobile-sub-item">About me</a></li>
-                    <li><a href="page-author.html" class="menu-mobile-sub-item">Author</a></li>
-                    <li><a href="page-search.html" class="menu-mobile-sub-item">Search Results</a></li>
-                    <li><a href="page-contact.html" class="menu-mobile-sub-item">Contact</a></li>
-                    <li><a href="page-login.html" class="menu-mobile-sub-item">Login</a></li>
-                    <li><a href="page-register.html" class="menu-mobile-sub-item">Register</a></li>
-                    <li><a href="page-forgot-password.html" class="menu-mobile-sub-item">Forgot Password</a></li>
-                    <li><a href="page-404.html" class="menu-mobile-sub-item">Error 404</a></li>
-                  </ul>
-                </li>
-                <li><a class="menu-mobile-item" href="page-about.html">About</a></li>
-                <li><a class="menu-mobile-item" href="page-contact.html">Contact</a></li>
+                
+                <li><a class="menu-mobile-item" href="{{home_page.url}}">{{home_page.title}}</a></li>
+                <li><a class="menu-mobile-item" href="{{blog_index_page.url}}">{{blog_index_page.title}}</a></li>
+                <li><a class="menu-mobile-item" href="{{contact_page.url}}">{{contact_page.title}}</a></li>
               </ul>
               <div class="flex flex-wrap flex-col mt-4">
                 <h4 class="text-lg text-neutral-950 dark:text-neutral-dark-950 font-bold mb-4">Stay Connectted</h4>
                 <p class="text-sm text-neutral-700 font-medium mb-4 leading-5">Imagine waking up to a dose of positivity, lifestyle hacks, and inspiration tailored just for you. That's what you get when you subscribe!</p>
-                <a href="page-login.html" class="w-full p-4 text-neutral-950 bg-primary-light-950 rounded-md font-bold text-sm">Subscribe Now</a>
+                <a href="#" class="w-full p-4 text-neutral-950 bg-primary-light-950 rounded-md font-bold text-sm">Subscribe Now</a>
               </div>
             </div>
           </nav>

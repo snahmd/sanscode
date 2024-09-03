@@ -149,7 +149,7 @@
             {% for blog_post in authorBlogPages %}
             <div class="w-full p-2.5 lg:pr-8 rounded-3xl border-2 border-neutral-300 dark:border-neutral-dark-300 flex-col justify-start items-start gap-2.5 inline-flex  hover-up">
               <div class="justify-start items-center gap-11 flex flex-col md:flex-row">
-                <a href="{{blogpost_url}}" class="rounded-[18px] overflow-hidden max-h-44 md:max-w-72">
+                <a href="{{blog_post.url}}" class="rounded-[18px] overflow-hidden max-h-44 md:max-w-72">
                   {% image blog_post.image width-500 as custom_image %}
                   <img src="{{  custom_image.url }}" />
                 </a>

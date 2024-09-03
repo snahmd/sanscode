@@ -1,5 +1,5 @@
 from wagtail.models import Page
-from blogpage.models import BlogCategories, BlogDetail, BlogIndex
+from blogpage.models import BlogCategories, BlogDetail, BlogIndex, Ads
 from contact.models import ContactPage
 from home.models import HomePage
 
@@ -11,11 +11,13 @@ def featuredPages(request):
     homePage = HomePage.objects.live().public().filter(locale__language_code=language).first()
     blogIndexPage = BlogIndex.objects.live().public().filter(locale__language_code=language).first()
     contactPage = ContactPage.objects.live().public().filter(locale__language_code=language).last()
+    ad = Ads.objects.all().filter(locale__language_code=language).first()
     return {
         "featured_pages": pages,
         "all_categories": categories,
         "blog_pages": blog_pages,
         "home_page": homePage,
         "blog_index_page": blogIndexPage,
-        "contact_page": contactPage
+        "contact_page": contactPage,
+        'ad': ad
     }

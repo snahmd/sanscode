@@ -86,6 +86,27 @@ class BlogDetailAuthorPlacement(models.Model):
     def __str__(self):
         return self.author.name
     
+
+class Ads(TranslatableMixin, models.Model):
+    title = models.CharField(max_length=100)
+    title_bold = models.CharField(max_length=100)
+    ad_image = models.ForeignKey(
+        get_image_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    def __str__(self):
+        return self.title + " " + self.title_bold
+    
+    class Meta(TranslatableMixin.Meta):
+        verbose_name = "Ad"
+        verbose_name_plural = "Ads"
+
+register_snippet(Ads)
+    
 class BlogCategories(TranslatableMixin, models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, blank=True, null=True)

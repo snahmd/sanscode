@@ -1,1 +1,13 @@
-baejedkjas
+<div class="flex flex-col gap-4">
+    <h4 class="text-2xl text-neutral-950 font-bold dark:text-neutral-dark-950">Sponsored <span class="font-light">Ads</span></h4>
+    <div class="w-72 h-96 relative rounded-2xl">
+      {% image ad.ad_image width-100 as custom_image %}
+      <img class="w-72 h-96 left-0 top-0 absolute rounded-2xl" src="{{custom_image.url}}" />
+      <div class="w-72 h-96 left-0 bottom-0 absolute bg-gradient-to-t from-neutral-950/50 to-transparent rounded-2xl"></div>
+      <div class="w-full px-8 bottom-12 absolute text-center">
+        <span class="text-xl text-neutral-0 font-bold">
+          <span class="font-light">{{ad.title}}</span> {{ad.title_bold}}
+        </span>
+      </div>
+    </div>
+  </div>
