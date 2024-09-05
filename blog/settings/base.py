@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     "wagtailcodeblock",
     'rest_framework',
     "crispy_forms",                     # new
-    "crispy_tailwind", 
     "wagtail.contrib.settings",
 ]
 
