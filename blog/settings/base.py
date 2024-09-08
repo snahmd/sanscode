@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "wagtailcodeblock",
     'rest_framework',
-    "crispy_forms",                     # new
+    "crispy_forms", 
+    "crispy_tailwind",                     # new
     'storages',
     "wagtail.contrib.settings",
 ]
