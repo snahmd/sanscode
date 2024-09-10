@@ -254,7 +254,7 @@ class BlogIndex(RoutablePageMixin, Page):
         print("yazarin postlari:")
         print(posts)
         print("------")
-        paginator = Paginator(posts, 9)
+        paginator = Paginator(posts, 6)
         page = request.GET.get('p')
         try:
             blogpages = paginator.page(page)
@@ -282,7 +282,7 @@ class BlogIndex(RoutablePageMixin, Page):
         return self.render(
             request, 
             context_overrides={
-                'posts': posts,
+                'posts': blogpages,
                 "author": author_instance,
                 'currentPage': currentPage,
             },
