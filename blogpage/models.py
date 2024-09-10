@@ -248,7 +248,9 @@ class BlogIndex(RoutablePageMixin, Page):
     @path('author/<str:author>/', name='author')
     def blog_posts_by_author(self, request, author=None):
         print("lkadskldaskadskkladskasdkl")
-        posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
+        posts = BlogDetail.objects.live().public().filter(author_placement__author__slug__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
+        print("all post of author:")
+        print(BlogDetail.objects.live().public().filter(author_placement__author__slug__iexact=author))
         print("yazarin postlari:")
         print(posts)
         print("------")
@@ -263,10 +265,13 @@ class BlogIndex(RoutablePageMixin, Page):
         except EmptyPage:
             blogpages = paginator.page(paginator.num_pages)
             currentPage = paginator.num_pages
-        print(posts)
+        print("blogpages:")
+        print(blogpages)
+        print("------")
         # get all objects
         author_instance = BlogAuthor.objects.all().filter(slug__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE).first()
         print("....")
+        print(author_instance)
         print(author_instance.url)
         # change page url according to author
         
