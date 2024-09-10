@@ -249,6 +249,9 @@ class BlogIndex(RoutablePageMixin, Page):
     def blog_posts_by_author(self, request, author=None):
         print("lkadskldaskadskkladskasdkl")
         posts = BlogDetail.objects.live().public().filter(author_placement__author__name__iexact=author).filter(locale__language_code=request.LANGUAGE_CODE)
+        print("yazarin postlari:")
+        print(posts)
+        print("------")
         paginator = Paginator(posts, 9)
         page = request.GET.get('p')
         try:
