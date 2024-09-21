@@ -81,7 +81,7 @@
         <div class="flex-col justify-start items-start gap-5 inline-flex hover-up">
           <a href="{{ blog_post.url }}" class="rounded-3xl overflow-hidden w-full max-h-[606px]">
             {% image blog_post.image width-500 as custom_image %}
-            <img src="{{  custom_image.url }}" class="h-[400px] w-full object-cover" />
+            <img src="{{  custom_image.url }}" class="h-[300px] w-full object-cover" />
           </a>
           <div class="flex-col justify-start items-start gap-3.5 flex">
             {% for placement in blog_post.categories_placement.all|slice:":1" %}
